@@ -11,6 +11,9 @@ const resErrorDev = (err, res) => {
 
 // 正式環境錯誤
 const resErrorProd = (err, res) => {
+    if (err.statusCode === 400) err.message = '格式或欄位錯誤。';
+    if (err.statusCode === 404) err.message = 'Bad Request';
+
     // 可預期的錯誤
     if (err.isOperational) {
         res.status(err.statusCode);
@@ -31,7 +34,25 @@ const resErrorProd = (err, res) => {
 
 // export 錯誤處理 function
 const errorHandler = (err, req, res, next) => {
-    err.statusCode = err.statusCode || 500;
+    // 有被 appError 攔截。自定義可預期錯誤
+    if (err.isOperational) {
+        err.message = err.message;
+        err.statusCode = err.statusCode;
+    }
+    // 沒有被 appError 攔截。但可預期的 mongoose 欄位有誤
+    else if (err.name === 'ValidationError' || err.name === 'CastError') {
+        err.isOperational = true;
+        err.message = err.message;
+        err.statusCode = 400;
+    }
+    //捕捉 SyntaxError 錯誤
+    else if (err.name === 'SyntaxError') {
+        err.isOperational = true;
+        err.statusCode = 404;
+        err.message = err.message;
+    } else {
+        err.statusCode = 500;
+    }
 
     // dev
     switch (process.env.NODE_ENV) {
@@ -39,12 +60,6 @@ const errorHandler = (err, req, res, next) => {
             return resErrorDev(err, res);
 
         case 'production':
-            // mongoose 欄位格式有誤
-            if (err.name === 'ValidationError' || err.name === 'CastError') {
-                err.isOperational = true;
-                err.message = '資料欄位未填寫正確，請重新輸入！';
-                return resErrorProd(err, res);
-            }
             return resErrorProd(err, res);
 
         //預設 production

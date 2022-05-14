@@ -10,9 +10,7 @@ const imgurClient = new ImgurClient({
 const uploadImgur = async (image, type, next) => {
     await getAuthorizationHeader(imgurClient);
     const imgurResData = await imgurClient.upload({ image, type });
-
-    if (imgurResData.success === false) return next(new appError('圖片上傳失敗。請確認圖片格式。', 400));
-    return imgurResData.data;
+    return imgurResData;
 };
 
 module.exports = uploadImgur;

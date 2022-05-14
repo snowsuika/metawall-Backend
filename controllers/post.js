@@ -37,7 +37,14 @@ const posts = {
             return next(new appError('user id 格式錯誤', 400));
         const isUserExist = await User.findById(user).exec();
         if (!isUserExist) return next(new appError('使用者不存在', 400));
-        if (image) imageLink = await uploadImgur(image, 'base64', next).link;
+        if (image) {
+            const { link } = await uploadImgur(image, 'base64', next);
+            if (link) {
+                imageLink = link;
+            } else {
+                return next(new appError('圖片上傳失敗。請確認圖片格式。', 400));
+            }
+        }
 
         const newPost = await Post.create({
             user: user,

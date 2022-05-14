@@ -1,5 +1,6 @@
 const User = require('../models/usersModel');
 const handleSuccess = require('../service/handlesSuccess');
+const appError = require('../service/appError');
 
 const users = {
     getAllUsers: async (req, res, next) => {
@@ -25,7 +26,11 @@ const users = {
             photo: data.photo,
         });
 
-        handleSuccess(req, res, newUser);
+        if (newUser) {
+            handleSuccess(req, res, newUser);
+        } else {
+            return next(new appError(err.message, 400));
+        }
     },
 
     updateUser: async (req, res, next) => {
