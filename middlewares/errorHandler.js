@@ -42,7 +42,7 @@ const errorHandler = (err, req, res, next) => {
     // 沒有被 appError 攔截。但可預期的 mongoose 欄位有誤
     else if (err.name === 'ValidationError' || err.name === 'CastError') {
         err.isOperational = true;
-        err.message = err.message;
+        err.message = 'id 或欄位格式錯誤';
         err.statusCode = 400;
     }
     //捕捉 SyntaxError 錯誤

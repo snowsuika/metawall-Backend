@@ -38,9 +38,6 @@ const posts = {
         const { user, image, content } = req.body;
         let imageLink = '';
 
-        // 確認是否有個使用者
-        if (!isValidId(user)) next(new appError('id 格式錯誤', 400));
-
         const isUserExist = await User.findById(user).exec();
         if (!isUserExist) return next(new appError('使用者不存在', 400));
         if (image) {
