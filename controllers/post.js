@@ -3,6 +3,12 @@ const User = require('../models/usersModel');
 const handleSuccess = require('../service/handlesSuccess');
 const uploadImgur = require('../service/uploadImgur');
 const appError = require('../service/appError');
+
+// 判斷 id 格式是否合法：
+const isValidId = (id) => {
+    if (id == '' || (id && !id.match(/^[0-9a-fA-F]{24}$/))) return false;
+};
+
 const posts = {
     getAllPost: async (req, res, next) => {
         let query = {
@@ -33,8 +39,8 @@ const posts = {
         let imageLink = '';
 
         // 確認是否有個使用者
-        if (user == '' || (user && !user.match(/^[0-9a-fA-F]{24}$/)))
-            return next(new appError('user id 格式錯誤', 400));
+        if (!isValidId(user)) next(new appError('id 格式錯誤', 400));
+
         const isUserExist = await User.findById(user).exec();
         if (!isUserExist) return next(new appError('使用者不存在', 400));
         if (image) {
@@ -63,6 +69,8 @@ const posts = {
         const id = req.params.id;
         const data = req.body;
 
+        if (!isValidId(id)) next(new appError('id 格式錯誤', 400));
+
         const updatePost = await Post.findByIdAndUpdate(
             id,
             {
@@ -86,6 +94,8 @@ const posts = {
 
     deleteOnePost: async (req, res, next) => {
         const id = req.params.id;
+        if (!isValidId(id)) next(new appError('id 格式錯誤', 400));
+
         const isSuccessDelete = await Post.findByIdAndDelete(id);
         if (isSuccessDelete) {
             const allPosts = await Post.find();
