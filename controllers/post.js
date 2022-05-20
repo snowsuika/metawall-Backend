@@ -1,13 +1,12 @@
+const mongoose = require('mongoose');
+// Model
 const Post = require('../models/postsModel');
 const User = require('../models/usersModel');
+
+// Service
 const handleSuccess = require('../service/handlesSuccess');
 const uploadImgur = require('../service/uploadImgur');
 const appError = require('../service/appError');
-
-// 判斷 id 格式是否合法：
-const isValidId = (id) => {
-    if (id == '' || (id && !id.match(/^[0-9a-fA-F]{24}$/))) return false;
-};
 
 const posts = {
     getAllPost: async (req, res, next) => {
@@ -26,17 +25,19 @@ const posts = {
 
     getOnePost: async (req, res, next) => {
         const id = req.params.id;
+        if (!mongoose.isObjectIdOrHexString(id)) return next(new appError('請確認 id 是否正確', 400));
         const post = await Post.findById(id);
         if (post) {
             handleSuccess(req, res, post);
         } else {
-            return next(new appError('資料取得失敗，請確認 id 是否正確', 400));
+            return next(new appError('資料取得失敗', 400));
         }
     },
 
     createPost: async (req, res, next) => {
         const { user, image, content } = req.body;
         let imageLink = '';
+        if (!mongoose.isObjectIdOrHexString(user)) return next(new appError('請確認 userId 是否正確', 400));
 
         const isUserExist = await User.findById(user).exec();
         if (!isUserExist) return next(new appError('使用者不存在', 400));
@@ -66,7 +67,7 @@ const posts = {
         const id = req.params.id;
         const data = req.body;
 
-        if (!isValidId(id)) next(new appError('id 格式錯誤', 400));
+        if (!mongoose.isObjectIdOrHexString(id)) return next(new appError('請確認 id 是否正確', 400));
 
         const updatePost = await Post.findByIdAndUpdate(
             id,
@@ -91,7 +92,8 @@ const posts = {
 
     deleteOnePost: async (req, res, next) => {
         const id = req.params.id;
-        if (!isValidId(id)) next(new appError('id 格式錯誤', 400));
+
+        if (!mongoose.isObjectIdOrHexString(id)) return next(new appError('請確認 id 是否正確', 400));
 
         const isSuccessDelete = await Post.findByIdAndDelete(id);
         if (isSuccessDelete) {

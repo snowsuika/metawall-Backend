@@ -5,8 +5,9 @@ var logger = require('morgan');
 var cors = require('cors'); // 解決跨域問題
 
 // router
-var postRouter = require('./routes/posts');
-var userRouter = require('./routes/users');
+const postRouter = require('./routes/posts');
+const userRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
 
 // middlewares
 const errorHandler = require('./middlewares/errorHandler.js');
@@ -28,8 +29,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/', express.static(path.join(__dirname, 'public')));
 
-app.use('/posts', postRouter);
-app.use('/users', userRouter);
+app.use(postRouter);
+app.use(userRouter);
+app.use('/auth', authRouter);
 
 // 未匹配到路由，顯示 404 Not Found
 app.use((req, res, next) => {

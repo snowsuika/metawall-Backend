@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const postsSchema = new mongoose.Schema(
     {
         user: {
-            type: mongoose.Schema.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
             required: [true, '使用者 id 為必填'],
         },

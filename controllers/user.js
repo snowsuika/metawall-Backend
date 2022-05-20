@@ -7,15 +7,6 @@ const users = {
         const allUsers = await User.find();
         handleSuccess(req, res, allUsers);
     },
-    getOneUser: async (req, res, next) => {
-        const id = req.params.id;
-        const user = await User.findById(id);
-        if (user) {
-            handleSuccess(req, res, user);
-        } else {
-            return next(new appError('資料取得失敗，請確認 id 是否正確', 400));
-        }
-    },
 
     createUser: async (req, res, next) => {
         const data = req.body;
@@ -67,10 +58,39 @@ const users = {
         }
     },
 
-    deleteAllUser: async (req, res, next) => {
-        await User.deleteMany({});
-        const allUsers = await User.find();
-        handleSuccess(req, res, allUsers);
+    getProfile: async (req, res, next) => {
+        const userId = req.user._id; //== 有經過 isAuth middleware，取得的 user 是驗證過的 ==
+
+        const profile = await User.findById(userId).exec();
+
+        if (profile) {
+            handleSuccess(req, res, profile);
+        } else {
+            return next(new appError('取得個人資料失敗', 400));
+        }
+    },
+
+    updateProfile: async (req, res, next) => {
+        const userId = req.user._id; //== 有經過 isAuth middleware，取得的 user 是驗證過的 ==
+        const { name, photo, sex } = req.body;
+
+        const updatedProfile = await User.findByIdAndUpdate(
+            userId,
+            {
+                name,
+                photo,
+                sex,
+            },
+            { new: true }
+        );
+
+        console.log('====updatedProfile===', updatedProfile);
+
+        if (updatedProfile) {
+            handleSuccess(req, res, updatedProfile);
+        } else {
+            return next(new appError('更新失敗，請確認欄位', 400));
+        }
     },
 };
 

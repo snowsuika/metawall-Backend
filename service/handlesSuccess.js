@@ -1,5 +1,5 @@
-const handleSuccess = (req, res, data) => {
-    res.status(200);
+const handleSuccess = (req, res, data, statusCode = 200) => {
+    res.status(statusCode);
     res.send({
         status: 'success',
         data,

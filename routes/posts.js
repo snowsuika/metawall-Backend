@@ -2,33 +2,37 @@ var express = require('express');
 var router = express.Router();
 const PostsControllers = require('../controllers/post.js');
 const handleErrorAsyncWrapper = require('../service/handleErrorAsync');
+
+// middlewares
+const isAuth = require('../middlewares/isAuth');
+
 /**
  *  GET  全部
  */
-router.get('/', handleErrorAsyncWrapper(PostsControllers.getAllPost));
+router.get('/posts', handleErrorAsyncWrapper(isAuth), handleErrorAsyncWrapper(PostsControllers.getAllPost));
 
 /**
  *  GET  單筆
  */
-router.get('/:id', handleErrorAsyncWrapper(PostsControllers.getOnePost));
+router.get('/post/:id', handleErrorAsyncWrapper(isAuth), handleErrorAsyncWrapper(PostsControllers.getOnePost));
 /**
  *  POST
  */
-router.post('/', handleErrorAsyncWrapper(PostsControllers.createPost));
+router.post('/post', handleErrorAsyncWrapper(isAuth), handleErrorAsyncWrapper(PostsControllers.createPost));
 
 /**
  *  PATCH
  */
-router.patch('/:id', handleErrorAsyncWrapper(PostsControllers.updatePosts));
+router.patch('/post/:id', handleErrorAsyncWrapper(isAuth), handleErrorAsyncWrapper(PostsControllers.updatePosts));
 
 /**
  *  DELETE 單筆
  */
-router.delete('/:id', handleErrorAsyncWrapper(PostsControllers.deleteOnePost));
+router.delete('/post/:id', handleErrorAsyncWrapper(isAuth), handleErrorAsyncWrapper(PostsControllers.deleteOnePost));
 
 /**
  *  DELETE 多筆
  */
-router.delete('/', handleErrorAsyncWrapper(PostsControllers.deleteAllPost));
+router.delete('/posts', handleErrorAsyncWrapper(isAuth), handleErrorAsyncWrapper(PostsControllers.deleteAllPost));
 
 module.exports = router;

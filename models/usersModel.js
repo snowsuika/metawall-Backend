@@ -23,6 +23,16 @@ const usersSchema = new mongoose.Schema(
         photo: {
             type: String,
         },
+        sex: {
+            type: String,
+            enum: ['male', 'female'],
+        },
+        password: {
+            type: String,
+            required: [true, '請輸入密碼'],
+            minlength: 8,
+            select: false,
+        },
         updatedAt: {
             type: Date,
             default: Date.now,

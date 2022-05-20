@@ -1,30 +1,42 @@
 var express = require('express');
 var router = express.Router();
+// controllers
+const AuthControllers = require('../controllers/auth.js');
 const UsersControllers = require('../controllers/user.js');
+
+//service
 const handleErrorAsyncWrapper = require('../service/handleErrorAsync');
 
-/**
- *  GET  全部
- */
-router.get('/', handleErrorAsyncWrapper(UsersControllers.getAllUsers));
+// middlewares
+const isAuth = require('../middlewares/isAuth');
 
 /**
- *  GET  單筆
+ *  GET  全部 (admin)
  */
-router.get('/:id', handleErrorAsyncWrapper(UsersControllers.getOneUser));
-/**
- *  POST
- */
-router.post('/', handleErrorAsyncWrapper(UsersControllers.createUser));
+router.get('/users', handleErrorAsyncWrapper(UsersControllers.getAllUsers));
 
 /**
- *  PATCH
+ *  POST (admin)
  */
-router.patch('/:id', handleErrorAsyncWrapper(UsersControllers.updateUser));
+router.post('/user', handleErrorAsyncWrapper(UsersControllers.createUser));
 
 /**
- *  DELETE 單筆
+ *  PATCH (admin)
  */
-router.delete('/:id', handleErrorAsyncWrapper(UsersControllers.deleteOneUser));
+router.patch('/user/:id', handleErrorAsyncWrapper(UsersControllers.updateUser));
+
+/**
+ *  DELETE 單筆 (admin)
+ */
+router.delete('/user/:id', handleErrorAsyncWrapper(UsersControllers.deleteOneUser));
+
+/**
+ *  取得個人資料
+ */
+router.get('/user/profile', handleErrorAsyncWrapper(isAuth), handleErrorAsyncWrapper(UsersControllers.getProfile));
+/**
+ *  更新個人資料
+ */
+router.post('/user/profile', handleErrorAsyncWrapper(isAuth), handleErrorAsyncWrapper(UsersControllers.updateProfile));
 
 module.exports = router;
