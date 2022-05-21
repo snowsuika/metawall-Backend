@@ -5,7 +5,7 @@ const doc = {
         title: 'week6 JWT homework',
         description: 'Description',
     },
-    host: 'localhost:3000',
+    host: 'https://metawall-snow.herokuapp.com/',
     schemes: ['http', 'https'],
     securityDefinitions: {
         apiKeyAuth: {
