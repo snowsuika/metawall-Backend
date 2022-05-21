@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "start:dev": "NODE_ENV=dev nodemon ./bin/www",
-    "start:production": "NODE_ENV=production nodemon ./bin/www"
+    "start:production": "NODE_ENV=production nodemon ./bin/www",
+    "swagger-autogen": "node ./swagger.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -19,6 +20,8 @@
     "mongoose": "^6.3.1",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.15",
+    "swagger-autogen": "^2.5.10",
+    "swagger-ui-express": "^4.3.0",
     "tslib": "^2.4.0",
     "validator": "^13.7.0"
   }

@@ -4,6 +4,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors'); // 解決跨域問題
 
+//Swagger
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json');
+
 // router
 const postRouter = require('./routes/posts');
 const userRouter = require('./routes/users');
@@ -29,9 +33,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/', express.static(path.join(__dirname, 'public')));
 
+/*
+  Router 
+ */
 app.use(postRouter);
 app.use(userRouter);
 app.use('/auth', authRouter);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // 未匹配到路由，顯示 404 Not Found
 app.use((req, res, next) => {
