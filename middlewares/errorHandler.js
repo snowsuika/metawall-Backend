@@ -11,9 +11,6 @@ const resErrorDev = (err, res) => {
 
 // 正式環境錯誤
 const resErrorProd = (err, res) => {
-    if (err.statusCode === 400) err.message = '格式或欄位錯誤。';
-    if (err.statusCode === 404) err.message = 'Bad Request';
-
     // 可預期的錯誤
     if (err.isOperational) {
         res.status(err.statusCode);
