@@ -59,11 +59,12 @@ router.delete(
  */
 router.get(
     /** #swagger.tags = ['User']
-      * #swagger.description = '取得個人資料 API'
-      * #swagger.security = [{
+     * #swagger.summary = '取得個人資料'
+     * #swagger.description = '取得個人資料 API'
+     * #swagger.security = [{
             "apiKeyAuth": []
         }]
-      * #swagger.responses[200] = {
+     * #swagger.responses[200] = {
           description: '取得成功',
           schema: {
                       "status": "success",
@@ -85,11 +86,12 @@ router.get(
  */
 router.patch(
     /** #swagger.tags = ['User']
-      * #swagger.description = '更新個人資料 API'
-      * #swagger.security = [{
+     * #swagger.summary = '更新個人資料'
+     * #swagger.description = '更新個人資料 API'
+     * #swagger.security = [{
             "apiKeyAuth": []
         }]
-      * #swagger.parameters['body'] = {
+     * #swagger.parameters['body'] = {
           in: 'body',
           description: '資料格式',
           required: true,

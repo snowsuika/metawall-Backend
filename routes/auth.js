@@ -10,10 +10,11 @@ const isAuth = require('../middlewares/isAuth');
  *  註冊
  */
 router.post(
-    /** #swagger.tags = ['Auth']
-      * #swagger.description = '註冊新會員 API'
-      * #swagger.parameters['body'] = {
-          in: 'body',
+    /**#swagger.tags = ['Auth']
+     * #swagger.summary = '註冊新會員'
+     * #swagger.description = '註冊新會員 API'
+     * #swagger.parameters['body'] = {
+        in: 'body',
           description: '資料格式',
           required: true,
           schema: {
@@ -25,7 +26,7 @@ router.post(
                 "photo":""
             }
         }
-      * #swagger.responses[200] = {
+     * #swagger.responses[200] = {
           description: '註冊成功',
           schema: {
                     "status": "success",
@@ -45,8 +46,9 @@ router.post(
  */
 router.post(
     /** #swagger.tags = ['Auth']
-      * #swagger.description = '會員登入 API'
-      * #swagger.parameters['body'] = {
+     * #swagger.summary = '會員登入'
+     * #swagger.description = '會員登入 API'
+     * #swagger.parameters['body'] = {
           in: 'body',
           description: '資料格式',
           required: true,
@@ -55,7 +57,7 @@ router.post(
                 "$password":"abcd1234"
             }
         }
-      * #swagger.responses[200] = {
+     * #swagger.responses[200] = {
           description: '註冊成功',
           schema: {
                     "status": "success",
@@ -75,11 +77,12 @@ router.post(
  */
 router.post(
     /** #swagger.tags = ['Auth']
-      * #swagger.description = '更改密碼 API'
-      * #swagger.security = [{
+     * #swagger.summary = '更新密碼'
+     * #swagger.description = '更改密碼 API'
+     * #swagger.security = [{
             "apiKeyAuth": []
         }]
-      * #swagger.parameters['body'] = {
+     * #swagger.parameters['body'] = {
           in: 'body',
           description: '資料格式',
           required: true,

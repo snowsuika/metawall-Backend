@@ -27,8 +27,24 @@
         "tags": [
           "Post"
         ],
+        "summary": "取得所有貼文 API",
         "description": "取得所有貼文 API",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "貼文關鍵字查詢",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "貼文排序 (新 -> 舊:desc ; 舊 -> 新 :asc ; 預設 desc)",
+            "type": "string",
+            "required": false
+          }
+        ],
         "responses": {
           "200": {
             "description": "取得成功",
@@ -101,6 +117,7 @@
         "tags": [
           "Post"
         ],
+        "summary": "刪除全部貼文",
         "description": "刪除全部貼文 API",
         "parameters": [],
         "responses": {
@@ -136,13 +153,15 @@
         "tags": [
           "Post"
         ],
+        "summary": "取得單筆貼文",
         "description": "取得單筆貼文 API",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "貼文 id"
           }
         ],
         "responses": {
@@ -201,6 +220,7 @@
         "tags": [
           "Post"
         ],
+        "summary": "更新貼文",
         "description": "更新貼文 API",
         "parameters": [
           {
@@ -282,13 +302,15 @@
         "tags": [
           "Post"
         ],
+        "summary": "刪除單筆貼文",
         "description": "刪除單筆貼文 API",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "貼文 id"
           }
         ],
         "responses": {
@@ -352,8 +374,34 @@
         "tags": [
           "Post"
         ],
+        "summary": "新增貼文",
         "description": "新增貼文 API",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "資料格式",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "type": "string",
+                  "example": "62879351059803b16709db57"
+                },
+                "content": {
+                  "type": "string",
+                  "example": "123"
+                },
+                "image": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            },
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "新增成功",
@@ -412,6 +460,7 @@
         "tags": [
           "User"
         ],
+        "summary": "取得個人資料",
         "description": "取得個人資料 API",
         "parameters": [],
         "responses": {
@@ -462,6 +511,7 @@
         "tags": [
           "User"
         ],
+        "summary": "更新個人資料",
         "description": "更新個人資料 API",
         "parameters": [
           {
@@ -539,6 +589,7 @@
         "tags": [
           "Auth"
         ],
+        "summary": "註冊新會員",
         "description": "註冊新會員 API",
         "parameters": [
           {
@@ -622,6 +673,7 @@
         "tags": [
           "Auth"
         ],
+        "summary": "會員登入",
         "description": "會員登入 API",
         "parameters": [
           {
@@ -686,6 +738,7 @@
         "tags": [
           "Auth"
         ],
+        "summary": "更新密碼",
         "description": "更改密碼 API",
         "parameters": [
           {

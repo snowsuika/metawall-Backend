@@ -10,12 +10,25 @@ const isAuth = require('../middlewares/isAuth');
  *  GET  全部
  */
 router.get(
-    /** #swagger.tags = ['Post']
-      * #swagger.description = '取得所有貼文 API'
-      * #swagger.security = [{
-            "apiKeyAuth": []
+    /**#swagger.tags = ['Post']
+     * #swagger.summary = '取得所有貼文 API'
+     * #swagger.description = '取得所有貼文 API'
+     * #swagger.security = [{
+          "apiKeyAuth": []
         }]
-      * #swagger.responses[200] = {
+     * #swagger.parameters['keyword'] = {
+          in: 'query',
+          description: '貼文關鍵字查詢',
+          type: 'string',
+          required: false,
+      }
+     * #swagger.parameters['sort'] = {
+            in: 'query',
+            description: '貼文排序 (新 -> 舊:desc ; 舊 -> 新 :asc ; 預設 desc)',
+            type: 'string',
+            required: false,
+      }
+     * #swagger.responses[200] = {
           description: '取得成功',
           schema: {
                     "status": "success",
@@ -46,10 +59,17 @@ router.get(
  */
 router.get(
     /** #swagger.tags = ['Post']
+      * #swagger.summary = '取得單筆貼文'
       * #swagger.description = '取得單筆貼文 API'
       * #swagger.security = [{
             "apiKeyAuth": []
         }]
+      * #swagger.parameters['id'] = {
+            in: 'path',
+            description: '貼文 id',
+            type: 'string',
+            required: true,
+      }
       * #swagger.responses[200] = {
           description: '取得成功',
           schema: {
@@ -74,11 +94,22 @@ router.get(
  */
 router.post(
     /**#swagger.tags = ['Post']
-      * #swagger.description = '新增貼文 API'
-      * #swagger.security = [{
+     * #swagger.summary = '新增貼文'
+     * #swagger.description = '新增貼文 API'
+     * #swagger.security = [{
             "apiKeyAuth": []
         }]
-      * #swagger.responses[200] = {
+     * #swagger.parameters['body'] = {
+          in: 'body',
+          description: '資料格式',
+          required: true,
+          schema: {
+                    "user":"62879351059803b16709db57",
+                    "content":"123",
+                    "image":""
+            }
+        }
+     * #swagger.responses[200] = {
           description: '新增成功',
           schema: {
                 "status": "success",
@@ -102,12 +133,13 @@ router.post(
  *  PATCH
  */
 router.patch(
-    /** #swagger.tags = ['Post']
-      * #swagger.description = '更新貼文 API'
-      * #swagger.security = [{
-            "apiKeyAuth": []
+    /**#swagger.tags = ['Post']
+     * #swagger.summary = '更新貼文'
+     * #swagger.description = '更新貼文 API'
+     * #swagger.security = [{
+          "apiKeyAuth": []
         }]
-      * #swagger.parameters['body'] = {
+     * #swagger.parameters['body'] = {
           in: 'body',
           description: '資料格式',
           required: true,
@@ -115,7 +147,7 @@ router.patch(
                   "content": "更新貼文內容",
             }
         }
-      * #swagger.responses[200] = {
+     * #swagger.responses[200] = {
           description: '更新成功',
           schema: {
               "status": "success",
@@ -140,11 +172,18 @@ router.patch(
  */
 router.delete(
     /** #swagger.tags = ['Post']
-      * #swagger.description = '刪除單筆貼文 API'
-      * #swagger.security = [{
-            "apiKeyAuth": []
+     * #swagger.summary = '刪除單筆貼文'
+     * #swagger.description = '刪除單筆貼文 API'
+     * #swagger.security = [{
+          "apiKeyAuth": []
         }]
-      * #swagger.responses[200] = {
+     * #swagger.parameters['id'] = {
+            in: 'path',
+            description: '貼文 id',
+            type: 'string',
+            required: true,
+      }
+     * #swagger.responses[200] = {
           description: '刪除成功',
           schema: {
               "status": "success",
@@ -167,21 +206,22 @@ router.delete(
 );
 
 /**
- *  DELETE 多筆
+ *  DELETE 全部
  */
 router.delete(
     /** #swagger.tags = ['Post']
-      * #swagger.description = '刪除全部貼文 API'
-      * #swagger.security = [{
+     * #swagger.summary = '刪除全部貼文'
+     * #swagger.description = '刪除全部貼文 API'
+     * #swagger.security = [{
             "apiKeyAuth": []
-        }]
-      * #swagger.responses[200] = {
+          }]
+     * #swagger.responses[200] = {
           description: '刪除成功',
           schema: {
               "status": "success",
               "data": []
             }
-        }
+          }
       */
     '/posts',
     handleErrorAsyncWrapper(isAuth),
