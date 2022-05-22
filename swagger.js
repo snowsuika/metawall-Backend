@@ -1,11 +1,13 @@
 const swaggerAutogen = require('swagger-autogen')();
 
+let host = process.env.NODE_ENV === 'dev' ? 'http://localhost:3000' : 'https://metawall-snow.herokuapp.com/';
+
 const doc = {
     info: {
         title: 'week6 JWT homework',
         description: 'Description',
     },
-    host: 'https://metawall-snow.herokuapp.com/',
+    host,
     schemes: ['http', 'https'],
     securityDefinitions: {
         apiKeyAuth: {

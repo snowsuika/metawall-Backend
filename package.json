@@ -6,7 +6,8 @@
     "start": "node ./bin/www",
     "start:dev": "NODE_ENV=dev nodemon ./bin/www",
     "start:production": "NODE_ENV=production nodemon ./bin/www",
-    "swagger-autogen": "node ./swagger.js"
+    "swagger:dev": "NODE_ENV=dev node ./swagger.js",
+    "swagger:production": "NODE_ENV=production  node ./swagger.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

@@ -517,7 +517,7 @@
           {
             "name": "body",
             "in": "body",
-            "description": "資料格式",
+            "description": "資料格式。sex : male;female",
             "required": true,
             "schema": {
               "type": "object",
