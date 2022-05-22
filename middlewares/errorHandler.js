@@ -37,9 +37,19 @@ const errorHandler = (err, req, res, next) => {
         err.statusCode = err.statusCode;
     }
     // 沒有被 appError 攔截。但可預期的 mongoose 欄位有誤
-    else if (err.name === 'ValidationError' || err.name === 'CastError') {
+    else if (err.name === 'ValidationError') {
+        const errMessage = Object.keys(err.errors)
+            .map((errItem) => err.errors[errItem].properties.message)
+            .join('、');
+
         err.isOperational = true;
-        err.message = 'id 或欄位格式錯誤';
+        err.message = errMessage;
+        err.statusCode = 400;
+    }
+    // 沒有被 appError 攔截。但可預期的 mongoose 欄位有誤
+    else if (err.name === 'CastError') {
+        err.isOperational = true;
+        err.message = 'id 格式或欄位格式有誤。';
         err.statusCode = 400;
     }
     //捕捉 SyntaxError 錯誤

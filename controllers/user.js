@@ -9,6 +9,7 @@ const users = {
     },
 
     createUser: async (req, res, next) => {
+        //TODO: 管理者幫使用者註冊
         const data = req.body;
 
         const newUser = await User.create({
@@ -25,7 +26,8 @@ const users = {
     },
 
     updateUser: async (req, res, next) => {
-        const id = req.params.id;
+        //TODO: 管理者替使用者更新資訊
+        const id = req.params?.id;
         const data = req.body;
 
         const updateUser = await User.findByIdAndUpdate(
@@ -48,7 +50,8 @@ const users = {
     },
 
     deleteOneUser: async (req, res, next) => {
-        const id = req.params.id;
+        //TODO: 管理者刪除使用者
+        const id = req.params?.id;
         const isSuccessDelete = await User.findByIdAndDelete(id);
         if (isSuccessDelete) {
             const allUsers = await User.find();
@@ -59,7 +62,7 @@ const users = {
     },
 
     getProfile: async (req, res, next) => {
-        const userId = req.user._id; //== 有經過 isAuth middleware，取得的 user 是驗證過的 ==
+        const userId = req.user?._id; //== 有經過 isAuth middleware，取得的 user 是驗證過的 ==
 
         const profile = await User.findById(userId).exec();
 
@@ -71,7 +74,7 @@ const users = {
     },
 
     updateProfile: async (req, res, next) => {
-        const userId = req.user._id; //== 有經過 isAuth middleware，取得的 user 是驗證過的 ==
+        const userId = req.user?._id; //== 有經過 isAuth middleware，取得的 user 是驗證過的 ==
         const { name, photo, sex } = req.body;
 
         const updatedProfile = await User.findByIdAndUpdate(
@@ -83,8 +86,6 @@ const users = {
             },
             { new: true }
         );
-
-        console.log('====updatedProfile===', updatedProfile);
 
         if (updatedProfile) {
             handleSuccess(req, res, updatedProfile);

@@ -90,15 +90,16 @@ const auth = {
     },
     updatePassword: async (req, res, next) => {
         const { password, confirmPassword } = req.body;
-        const user = await User.findOne({ _id: req.user._id }).select('+password');
+        const user = await User.findOne({ _id: req.user?._id }).select('+password');
         //== 有經過 isAuth middleware，取得的 user 是驗證過的 ==
 
         //  1) 驗證欄位 a. 是否都相同 b. 是否與之前密碼相同
         if (password !== confirmPassword) return next(new appError('密碼不一致', 400));
+        if (!validator.isLength(password, { min: 8 })) return next(new appError('密碼低於 8 碼！', 400));
         if (await bcrypt.compare(password, user.password)) return next(new appError('密碼不得與之前相同', 400));
 
         //  2) 寫入資料庫
-        const updataDB = await User.findByIdAndUpdate(req.user.id, {
+        const updataDB = await User.findByIdAndUpdate(req.user?.id, {
             password: await bcrypt.hash(password, 12),
         });
         //  3) 給予 token

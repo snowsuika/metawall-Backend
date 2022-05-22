@@ -24,7 +24,7 @@ const posts = {
     },
 
     getOnePost: async (req, res, next) => {
-        const id = req.params.id;
+        const id = req.params?.id;
         if (!mongoose.isObjectIdOrHexString(id)) return next(new appError('請確認 id 是否正確', 400));
         const post = await Post.findById(id);
         if (post) {
@@ -64,7 +64,7 @@ const posts = {
     },
 
     updatePosts: async (req, res, next) => {
-        const id = req.params.id;
+        const id = req.params?.id;
         const data = req.body;
 
         if (!mongoose.isObjectIdOrHexString(id)) return next(new appError('請確認 id 是否正確', 400));
@@ -91,7 +91,7 @@ const posts = {
     },
 
     deleteOnePost: async (req, res, next) => {
-        const id = req.params.id;
+        const id = req.params?.id;
 
         if (!mongoose.isObjectIdOrHexString(id)) return next(new appError('請確認 id 是否正確', 400));
 
