@@ -1,0 +1,625 @@
+{
+	"info": {
+		"_postman_id": "8b5dd01b-3803-4bc2-b782-a73049a2cde0",
+		"name": "week6 - JWT 身份驗證 - heroku",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11417084"
+	},
+	"item": [
+		{
+			"name": "貼文 | /post",
+			"item": [
+				{
+					"name": "[Auth] 取得所有貼文 | /posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODc5MzUxMDU5ODAzYjE2NzA5ZGI1NyIsImlhdCI6MTY1MzE0MjMwMiwiZXhwIjoxNjUzNzQ3MTAyfQ.UfVrrGWoahj9BcufG1VfkfBvzcWq2JtFVv3BHkTcNlI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://metawall-snow.herokuapp.com/posts?sort=desc",
+							"protocol": "https",
+							"host": [
+								"metawall-snow",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"posts"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "66",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] 取得單筆貼文 | /post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODc5MzUxMDU5ODAzYjE2NzA5ZGI1NyIsImlhdCI6MTY1MzE0MjMwMiwiZXhwIjoxNjUzNzQ3MTAyfQ.UfVrrGWoahj9BcufG1VfkfBvzcWq2JtFVv3BHkTcNlI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://metawall-snow.herokuapp.com/post/:id",
+							"protocol": "https",
+							"host": [
+								"metawall-snow",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] 新增貼文 | /post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODc5MzUxMDU5ODAzYjE2NzA5ZGI1NyIsImlhdCI6MTY1MzE0MjMwMiwiZXhwIjoxNjUzNzQ3MTAyfQ.UfVrrGWoahj9BcufG1VfkfBvzcWq2JtFVv3BHkTcNlI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user\":\"6289c7f495b59512e12e4b5e\",\n    \"content\":\"123\",\n    \"image\":\"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://metawall-snow.herokuapp.com/post",
+							"protocol": "https",
+							"host": [
+								"metawall-snow",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"post"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] 編輯貼文 | /post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODc5MzUxMDU5ODAzYjE2NzA5ZGI1NyIsImlhdCI6MTY1MzE0MjMwMiwiZXhwIjoxNjUzNzQ3MTAyfQ.UfVrrGWoahj9BcufG1VfkfBvzcWq2JtFVv3BHkTcNlI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\":\"update\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://metawall-snow.herokuapp.com/post/:id",
+							"protocol": "https",
+							"host": [
+								"metawall-snow",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] 刪除貼文 | /post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODc5MzUxMDU5ODAzYjE2NzA5ZGI1NyIsImlhdCI6MTY1MzE0MjMwMiwiZXhwIjoxNjUzNzQ3MTAyfQ.UfVrrGWoahj9BcufG1VfkfBvzcWq2JtFVv3BHkTcNlI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://metawall-snow.herokuapp.com/post/:id",
+							"protocol": "https",
+							"host": [
+								"metawall-snow",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] 刪除所有貼文 | /posts",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://metawall-snow.herokuapp.com/posts",
+							"protocol": "https",
+							"host": [
+								"metawall-snow",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "管理者 | /user",
+			"item": [
+				{
+					"name": "[admin][Auth]  取得所有使用者 | /users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://metawall-snow.herokuapp.com/users",
+							"protocol": "https",
+							"host": [
+								"metawall-snow",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "66",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "<未完>[admin][Auth]  新增使用者 | /user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"小明\",\n    \"email\":\"min@yahoo.com.tw\",\n    \"password\":\"abc12345\",\n    \"confirmPassword\":\"abc12345\",\n    \"sex\":\"male\",\n    \"photo\":\"https://truth.bahamut.com.tw/s01/202112/6bf6fbbbe64805169d9e7466431a50c1.JPG\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://metawall-snow.herokuapp.com/user",
+							"protocol": "https",
+							"host": [
+								"metawall-snow",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "<未完>[admin][Auth]  編輯使用者 | /user/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"孔明\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://metawall-snow.herokuapp.com/user/:id",
+							"protocol": "https",
+							"host": [
+								"metawall-snow",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[admin][Auth]  刪除單個使用者 | /user/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://metawall-snow.herokuapp.com/user/:id",
+							"protocol": "https",
+							"host": [
+								"metawall-snow",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "使用者個人資料 | /user/profile",
+			"item": [
+				{
+					"name": "[Auth] 取得個人資料 | /user/profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODlkYjdkZDQxMGI3Y2ZiOTRkZWI4YSIsImlhdCI6MTY1MzIwMjAyMSwiZXhwIjoxNjUzODA2ODIxfQ.yX7ZIRq5eNL0srgdhVYsQ3bc7nuI5Grb_mINRGK7v8I",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://metawall-snow.herokuapp.com/user/profile",
+							"protocol": "https",
+							"host": [
+								"metawall-snow",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"user",
+								"profile"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "66",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] 更新個人資料 | /user/profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODljN2Y0OTViNTk1MTJlMTJlNGI1ZSIsImlhdCI6MTY1MzE5NzM2MywiZXhwIjoxNjUzODAyMTYzfQ.vy-3LrI61ZfzX3D7Vvd6yOqoP5uxIZu2fH5-5ZZ0KCI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"snow_upate\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://metawall-snow.herokuapp.com/user/profile",
+							"protocol": "https",
+							"host": [
+								"metawall-snow",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"user",
+								"profile"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "66",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth | /auth",
+			"item": [
+				{
+					"name": "註冊 | /register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"name\":\"snow\",\n    \"email\":\"snow1@gmail.com\",\n    \"password\":\"abc123\",\n    \"confirmPassword\":\"abc123\",\n    \"sex\":\"feme\",\n    \"photo\":\"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://metawall-snow.herokuapp.com/auth/register",
+							"protocol": "https",
+							"host": [
+								"metawall-snow",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "登入 | /login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODY3MTA2YTBjMTczMmQ4OTA0ZjIyMiIsImlhdCI6MTY1Mjk4MDYyNCwiZXhwIjoxNjUzNTg1NDI0fQ.aQYTtu6a2ZdOOvsVkUITeF2pxkBUFp1uh1gHqkn8jpM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"snow@gmail.com\",\n    \"password\":\"1231\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://metawall-snow.herokuapp.com/auth/login",
+							"protocol": "https",
+							"host": [
+								"metawall-snow",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] 更新密碼 |/updatePassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODlkYjdkZDQxMGI3Y2ZiOTRkZWI4YSIsImlhdCI6MTY1MzIwMTk4MSwiZXhwIjoxNjUzODA2NzgxfQ.QOIaFADnsOP0FzhiisW0MvFqe7TJ7J6BV_6gbn5OgHo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODUwMDQ5MWExYTZkNDBiNzA1OGYxNyIsImlhdCI6MTY1Mjk3MjI2NCwiZXhwIjoxNjUzNTc3MDY0fQ.Eu0NPPvQjcBc-M01y625eTuwwHklxF5jtCOcvsRi8wQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\":\"aaaaaaaa\",\n    \"confirmPassword\":\"aaaaaaaa\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://metawall-snow.herokuapp.com/auth/updatePassword",
+							"protocol": "https",
+							"host": [
+								"metawall-snow",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"auth",
+								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});",
+					"// pm.test(\"Status code is 400\", function () {",
+					"//     pm.response.to.have.status(400);",
+					"// });"
+				]
+			}
+		}
+	]
+}
