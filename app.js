@@ -12,6 +12,7 @@ const swaggerDocument = require('./swagger-output.json');
 const postRouter = require('./routes/posts');
 const userRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
+const uploadRouter = require('./routes/upload');
 
 // middlewares
 const errorHandler = require('./middlewares/errorHandler.js');
@@ -36,9 +37,10 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 /*
   Router 
  */
+app.use('/auth', authRouter);
 app.use(postRouter);
 app.use(userRouter);
-app.use('/auth', authRouter);
+app.use(uploadRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // 未匹配到路由，顯示 404 Not Found

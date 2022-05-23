@@ -4,7 +4,7 @@
     "title": "week6 JWT homework",
     "description": "Description"
   },
-  "host": "https://metawall-snow.herokuapp.com/",
+  "host": "http://localhost:3000",
   "basePath": "/",
   "tags": [],
   "schemes": [
@@ -22,6 +22,221 @@
   "consumes": [],
   "produces": [],
   "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "註冊新會員",
+        "description": "註冊新會員 API",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "資料格式",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "snow"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "snow@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "abcd12345"
+                },
+                "confirmPassword": {
+                  "type": "string",
+                  "example": "abcd12345"
+                },
+                "sex": {
+                  "type": "string",
+                  "example": "female"
+                },
+                "photo": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "name",
+                "email",
+                "password",
+                "confirmPassword",
+                "sex"
+              ]
+            },
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "註冊成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "snow"
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODhiMDE3ZDkyZTU0NTIxNWJlZGFkOCIsImlhdCI6MTY1MzEyNTE0MywiZXhwIjoxNjUzNzI5OTQzfQ.NCBwgh2jc4a_DrMoDlDM8dgIlvY6dqZmpMkeSGXB4x4"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "會員登入",
+        "description": "會員登入 API",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "資料格式",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "snow@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "abcd1234"
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            },
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "註冊成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "snow"
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODc5MzUxMDU5ODAzYjE2NzA5ZGI1NyIsImlhdCI6MTY1MzE0MjE4NSwiZXhwIjoxNjUzNzQ2OTg1fQ.2f2wdB84w1B-b1nobRSN6t4h9oB2dTmYUSEC8yJooQU"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/updatePassword": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "更新密碼",
+        "description": "更改密碼 API",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "資料格式",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string",
+                  "example": "1231"
+                },
+                "confirmPassword": {
+                  "type": "string",
+                  "example": "1231"
+                }
+              },
+              "required": [
+                "password",
+                "confirmPassword"
+              ]
+            },
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "更新密碼成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODc5MzUxMDU5ODAzYjE2NzA5ZGI1NyIsImlhdCI6MTY1MzE0MjMxMiwiZXhwIjoxNjUzNzQ3MTEyfQ.YkUQROOjX36htQNgGpop5_vq-I_IgUh04HPiX24SYO4"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/posts": {
       "get": {
         "tags": [
@@ -584,61 +799,28 @@
         ]
       }
     },
-    "/auth/register": {
+    "/uploadImage": {
       "post": {
         "tags": [
-          "Auth"
+          "Upload"
         ],
-        "summary": "註冊新會員",
-        "description": "註冊新會員 API",
+        "summary": "上傳圖片",
+        "description": "上傳圖片 API",
+        "consumes": [
+          "multipart/form-data"
+        ],
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
-            "description": "資料格式",
+            "name": "singleFile",
+            "in": "formData",
+            "type": "file",
             "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "snow"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "snow@gmail.com"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "abcd12345"
-                },
-                "confirmPassword": {
-                  "type": "string",
-                  "example": "abcd12345"
-                },
-                "sex": {
-                  "type": "string",
-                  "example": "female"
-                },
-                "photo": {
-                  "type": "string",
-                  "example": ""
-                }
-              },
-              "required": [
-                "name",
-                "email",
-                "password",
-                "confirmPassword",
-                "sex"
-              ]
-            },
-            "type": "string"
+            "description": "資料格式"
           }
         ],
         "responses": {
           "200": {
-            "description": "註冊成功",
+            "description": "上傳成功",
             "schema": {
               "type": "object",
               "properties": {
@@ -649,13 +831,13 @@
                 "data": {
                   "type": "object",
                   "properties": {
-                    "name": {
+                    "status": {
                       "type": "string",
-                      "example": "snow"
+                      "example": "success"
                     },
-                    "token": {
+                    "imgUrl": {
                       "type": "string",
-                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODhiMDE3ZDkyZTU0NTIxNWJlZGFkOCIsImlhdCI6MTY1MzEyNTE0MywiZXhwIjoxNjUzNzI5OTQzfQ.NCBwgh2jc4a_DrMoDlDM8dgIlvY6dqZmpMkeSGXB4x4"
+                      "example": "https://i.imgur.com/sDZNjwH.png"
                     }
                   }
                 }
@@ -668,42 +850,28 @@
         }
       }
     },
-    "/auth/login": {
+    "/uploadAvatar": {
       "post": {
         "tags": [
-          "Auth"
+          "Upload"
         ],
-        "summary": "會員登入",
-        "description": "會員登入 API",
+        "summary": "上傳使用者頭像",
+        "description": "上傳使用者頭像 API",
+        "consumes": [
+          "multipart/form-data"
+        ],
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
-            "description": "資料格式",
+            "name": "singleFile",
+            "in": "formData",
+            "type": "file",
             "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "type": "string",
-                  "example": "snow@gmail.com"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "abcd1234"
-                }
-              },
-              "required": [
-                "email",
-                "password"
-              ]
-            },
-            "type": "string"
+            "description": "資料格式"
           }
         ],
         "responses": {
           "200": {
-            "description": "註冊成功",
+            "description": "上傳成功",
             "schema": {
               "type": "object",
               "properties": {
@@ -714,13 +882,13 @@
                 "data": {
                   "type": "object",
                   "properties": {
-                    "name": {
+                    "status": {
                       "type": "string",
-                      "example": "snow"
+                      "example": "success"
                     },
-                    "token": {
+                    "imgUrl": {
                       "type": "string",
-                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODc5MzUxMDU5ODAzYjE2NzA5ZGI1NyIsImlhdCI6MTY1MzE0MjE4NSwiZXhwIjoxNjUzNzQ2OTg1fQ.2f2wdB84w1B-b1nobRSN6t4h9oB2dTmYUSEC8yJooQU"
+                      "example": "https://i.imgur.com/sDZNjwH.png"
                     }
                   }
                 }
@@ -731,72 +899,6 @@
             }
           }
         }
-      }
-    },
-    "/auth/updatePassword": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "更新密碼",
-        "description": "更改密碼 API",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "資料格式",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "password": {
-                  "type": "string",
-                  "example": "1231"
-                },
-                "confirmPassword": {
-                  "type": "string",
-                  "example": "1231"
-                }
-              },
-              "required": [
-                "password",
-                "confirmPassword"
-              ]
-            },
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "更新密碼成功",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "token": {
-                      "type": "string",
-                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODc5MzUxMDU5ODAzYjE2NzA5ZGI1NyIsImlhdCI6MTY1MzE0MjMxMiwiZXhwIjoxNjUzNzQ3MTEyfQ.YkUQROOjX36htQNgGpop5_vq-I_IgUh04HPiX24SYO4"
-                    }
-                  }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
       }
     }
   },

@@ -5,7 +5,6 @@ const User = require('../models/usersModel');
 
 // Service
 const handleSuccess = require('../service/handlesSuccess');
-const uploadImgur = require('../service/uploadImgur');
 const appError = require('../service/appError');
 
 const posts = {
@@ -36,24 +35,16 @@ const posts = {
 
     createPost: async (req, res, next) => {
         const { user, image, content } = req.body;
-        let imageLink = '';
+
         if (!mongoose.isObjectIdOrHexString(user)) return next(new appError('請確認 userId 是否正確', 400));
 
         const isUserExist = await User.findById(user).exec();
         if (!isUserExist) return next(new appError('使用者不存在', 400));
-        if (image) {
-            const { link } = await uploadImgur(image, 'base64', next);
-            if (link) {
-                imageLink = link;
-            } else {
-                return next(new appError('圖片上傳失敗。請確認圖片格式。', 400));
-            }
-        }
 
         const newPost = await Post.create({
-            user: user,
-            image: imageLink,
-            content: content,
+            user,
+            image,
+            content,
         });
 
         if (newPost) {
