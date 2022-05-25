@@ -7,7 +7,7 @@ const handleErrorAsyncWrapper = require('../service/handleErrorAsync');
 const isAuth = require('../middlewares/isAuth');
 
 /**
- *  GET  全部
+ *  GET  取得全部貼文
  */
 router.get(
     /**#swagger.tags = ['Post']
@@ -55,7 +55,7 @@ router.get(
 );
 
 /**
- *  GET  單筆
+ *  GET  取得單筆貼文
  */
 router.get(
     /** #swagger.tags = ['Post']
@@ -90,7 +90,7 @@ router.get(
     handleErrorAsyncWrapper(PostsControllers.getOnePost)
 );
 /**
- *  POST
+ *  POST 新增貼文
  */
 router.post(
     /**#swagger.tags = ['Post']
@@ -130,7 +130,7 @@ router.post(
 );
 
 /**
- *  PATCH
+ *  PATCH 更新貼文
  */
 router.patch(
     /**#swagger.tags = ['Post']
@@ -168,7 +168,7 @@ router.patch(
 );
 
 /**
- *  DELETE 單筆
+ *  DELETE 刪除單筆貼文
  */
 router.delete(
     /** #swagger.tags = ['Post']
@@ -206,7 +206,7 @@ router.delete(
 );
 
 /**
- *  DELETE 全部
+ *  DELETE 刪除全部貼文
  */
 router.delete(
     /** #swagger.tags = ['Post']
@@ -226,6 +226,90 @@ router.delete(
     '/posts',
     handleErrorAsyncWrapper(isAuth),
     handleErrorAsyncWrapper(PostsControllers.deleteAllPost)
+);
+
+/**
+ *  POST 貼文增加 like
+ */
+router.post(
+    /** #swagger.tags = ['Post']
+      * #swagger.summary = '新增貼文 like'
+      * #swagger.description = '新增貼文 like API'
+      * #swagger.security = [{
+            "apiKeyAuth": []
+          }]
+      * #swagger.parameters['id'] = {
+            in: 'path',
+            description: '貼文 id',
+            type: 'string',
+            required: true,
+      }
+      * #swagger.responses[200] = {
+          description: '新增成功',
+          schema: {
+            "status": "success",
+            "data": [
+                {
+                    "_id": "628bb1ed0393677f3b363d5e",
+                    "user": {
+                        "_id": "6289c7f495b59512e12e4b5e",
+                        "name": "snow_upate",
+                        "photo": ""
+                    },
+                    "image": "",
+                    "content": "123",
+                    "likes": [],
+                    "createdAt": "2022-05-23T16:10:21.102Z"
+                }
+            ]
+            }
+          }
+ */
+    '/post/:id/likes',
+    handleErrorAsyncWrapper(isAuth),
+    handleErrorAsyncWrapper(PostsControllers.createLike)
+);
+
+/**
+ *  DELETE 取消貼文按讚
+ */
+router.delete(
+    /** #swagger.tags = ['Post']
+    * #swagger.summary = '取消貼文按讚'
+    * #swagger.description = '取消貼文按讚 API'
+    * #swagger.security = [{
+          "apiKeyAuth": []
+        }]
+    * #swagger.parameters['id'] = {
+          in: 'path',
+          description: '貼文 id',
+          type: 'string',
+          required: true,
+    }
+    * #swagger.responses[200] = {
+        description: '新增成功',
+        schema: {
+          "status": "success",
+          "data": [
+              {
+                  "_id": "628bb1ed0393677f3b363d5e",
+                  "user": {
+                      "_id": "6289c7f495b59512e12e4b5e",
+                      "name": "snow_upate",
+                      "photo": ""
+                  },
+                  "image": "",
+                  "content": "123",
+                  "likes": [],
+                  "createdAt": "2022-05-23T16:10:21.102Z"
+              }
+          ]
+          }
+        }
+*/
+    '/post/:id/likes',
+    handleErrorAsyncWrapper(isAuth),
+    handleErrorAsyncWrapper(PostsControllers.deleteLike)
 );
 
 module.exports = router;

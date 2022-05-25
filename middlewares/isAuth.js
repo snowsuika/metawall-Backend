@@ -24,6 +24,8 @@ const isAuth = async (req, res, next) => {
     });
 
     const currentUser = await User.findById(decoded.id);
+    if (!currentUser) return next(new appError('該用戶已不存在', 400));
+
     req.user = currentUser;
     next();
 };

@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 // controllers
-const AuthControllers = require('../controllers/auth.js');
 const UsersControllers = require('../controllers/user.js');
 
 //service

@@ -19,10 +19,12 @@ const postsSchema = new mongoose.Schema(
             type: String,
             required: [true, 'Content 為必填'],
         },
-        likes: {
-            type: Number,
-            default: 0,
-        },
+        likes: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+            },
+        ],
     },
     { versionKey: false }
 );

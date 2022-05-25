@@ -100,6 +100,46 @@ const posts = {
         const allPosts = await Post.find();
         handleSuccess(req, res, allPosts);
     },
+
+    createLike: async (req, res, next) => {
+        const userId = req.user?._id; //要被新增進去的 userId
+        const postId = req.params?.id;
+
+        console.log(userId);
+        console.log(postId);
+
+        const updateLikes = await Post.findByIdAndUpdate(
+            { _id: postId },
+            { $addToSet: { likes: userId } },
+            {
+                new: true,
+            }
+        );
+
+        if (updateLikes) {
+            handleSuccess(req, res, updateLikes);
+        } else {
+            return next(new appError('新增 like 失敗', 400));
+        }
+    },
+    deleteLike: async (req, res, next) => {
+        const userId = req.user?._id; //要被新增進去的 userId
+        const postId = req.params?.id;
+
+        const updateLikes = await Post.findByIdAndUpdate(
+            { _id: postId },
+            { $pull: { likes: userId } },
+            {
+                new: true,
+            }
+        );
+
+        if (updateLikes) {
+            handleSuccess(req, res, updateLikes);
+        } else {
+            return next(new appError('取消 like 失敗', 400));
+        }
+    },
 };
 
 module.exports = posts;
