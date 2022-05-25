@@ -1,0 +1,887 @@
+{
+	"info": {
+		"_postman_id": "f2b270c5-5dbe-4eb1-a161-183098f3d8b1",
+		"name": "metaWall-Backend-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11417084"
+	},
+	"item": [
+		{
+			"name": "貼文 | /post",
+			"item": [
+				{
+					"name": "[Auth] 取得所有貼文 | /posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/posts?keyword=&sort=",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"posts"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": ""
+								},
+								{
+									"key": "sort",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] 取得單筆貼文 | /post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/post/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] 新增貼文 | /post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user\":\"6289c7f495b59512e12e4b5e\",\n    \"content\":\"123\",\n    \"image\":\"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/post",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"post"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] 編輯貼文 | /post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\":\"update\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/post/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] 刪除貼文 | /post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/post/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] 刪除所有貼文 | /posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/posts",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] 貼文按讚 | /post/:id/likes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/post/:id/likes",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"post",
+								":id",
+								"likes"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "628bb1ed0393677f3b363d5e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] 取消貼文按讚 | /post/:id/likes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/post/:id/likes",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"post",
+								":id",
+								"likes"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "628bb1ed0393677f3b363d5e"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "管理者 | /user",
+			"item": [
+				{
+					"name": "<未完> [admin][Auth]  取得所有使用者 | /users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/users",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "66",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "<未完>[admin][Auth]  新增使用者 | /user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"小明\",\n    \"email\":\"min@yahoo.com.tw\",\n    \"password\":\"abc12345\",\n    \"confirmPassword\":\"abc12345\",\n    \"sex\":\"male\",\n    \"photo\":\"https://truth.bahamut.com.tw/s01/202112/6bf6fbbbe64805169d9e7466431a50c1.JPG\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "<未完>[admin][Auth]  編輯使用者 | /user/:id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"孔明\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/user/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "<未完> [admin][Auth]  刪除單個使用者 | /user/:id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/user/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "使用者個人資料 | /user",
+			"item": [
+				{
+					"name": "[Auth] 取得個人資料 | /user/profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/user/profile",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								"profile"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "66",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] 更新個人資料 | /user/profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"snow_upate\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/user/profile",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								"profile"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "66",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] 取得我按讚的文章 | /user/likeList",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/user/likeList",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								"likeList"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "66",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth | /auth",
+			"item": [
+				{
+					"name": "註冊 | /register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"snow\",\n    \"email\":\"snow5@gmail.com\",\n    \"password\":\"abcd1234\",\n    \"confirmPassword\":\"abcd1234\",\n    \"sex\":\"female\",\n    \"photo\":\"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/auth/register",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "登入 | /login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"admin@gmail.com\",\n    \"password\":\"abcd1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/auth/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] 更新密碼 |/updatePassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODUwMDQ5MWExYTZkNDBiNzA1OGYxNyIsImlhdCI6MTY1Mjk3MjI2NCwiZXhwIjoxNjUzNTc3MDY0fQ.Eu0NPPvQjcBc-M01y625eTuwwHklxF5jtCOcvsRi8wQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\":\"aaaaaaaa\",\n    \"confirmPassword\":\"aaaaaaaa\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/auth/updatePassword",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "圖片上傳 | /upload",
+			"item": [
+				{
+					"name": "[Auth] 上傳圖片 |/upload",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"description": "form-data",
+									"type": "file",
+									"src": "/Users/snow/Downloads/未命名-1.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/uploadImage",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"uploadImage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] 上傳使用者頭像 |/upload",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"description": "form-data",
+									"type": "file",
+									"src": "/Users/snow/Downloads/EJFwGRFh-1.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/uploadAvatar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"uploadAvatar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[imgur] 上傳圖片",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "7f3419a677ed3de3211ea9d0d211df2de0220ac3",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"description": "檔案本體",
+									"type": "file",
+									"src": "/Users/snow/Downloads/197705_HjoGpNkS.png"
+								},
+								{
+									"key": "album",
+									"value": "LNOA0kO",
+									"description": "相簿 id",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "file",
+									"description": "檔案類型",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.imgur.com/3/upload",
+							"protocol": "https",
+							"host": [
+								"api",
+								"imgur",
+								"com"
+							],
+							"path": [
+								"3",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});",
+					"// pm.test(\"Status code is 400\", function () {",
+					"//     pm.response.to.have.status(400);",
+					"// });"
+				]
+			}
+		}
+	]
+}
