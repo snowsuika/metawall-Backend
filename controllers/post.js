@@ -105,9 +105,6 @@ const posts = {
         const userId = req.user?._id; //要被新增進去的 userId
         const postId = req.params?.id;
 
-        console.log(userId);
-        console.log(postId);
-
         const updateLikes = await Post.findByIdAndUpdate(
             { _id: postId },
             { $addToSet: { likes: userId } },

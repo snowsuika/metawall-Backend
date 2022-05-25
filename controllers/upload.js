@@ -7,7 +7,7 @@ const appError = require('../service/appError');
 
 const upload = {
     uploadImage: async (req, res, next) => {
-        if (!req.files.length) return next(new appError('尚未上傳檔案', 400));
+        if (!req?.files?.length) return next(new appError('尚未上傳檔案', 400));
 
         const client = new ImgurClient({
             clientId: process.env.IMGUR_CLIENT_ID,
@@ -28,8 +28,7 @@ const upload = {
     },
 
     uploadAvatar: async (req, res, next) => {
-        console.log(req.files);
-        if (!req.files.length) return next(new appError('尚未上傳檔案', 400));
+        if (!req?.files?.length) return next(new appError('尚未上傳檔案', 400));
 
         const { width, height } = sizeOf(req.files[0].buffer);
         const isSquare = width === height;
