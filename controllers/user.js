@@ -1,4 +1,5 @@
 const User = require('../models/usersModel');
+const Post = require('../models/postsModel');
 const handleSuccess = require('../service/handlesSuccess');
 const appError = require('../service/appError');
 
@@ -91,6 +92,23 @@ const users = {
             handleSuccess(req, res, updatedProfile);
         } else {
             return next(new appError('更新失敗，請確認欄位', 400));
+        }
+    },
+
+    getLikeList: async (req, res, next) => {
+        const userId = req.user?._id;
+
+        const likeList = await Post.find({
+            likes: { $in: [userId] },
+        }).populate({
+            path: 'user',
+            select: '_id name',
+        });
+
+        if (likeList) {
+            handleSuccess(req, res, likeList);
+        } else {
+            return next(new appError('取得按讚文章失敗', 400));
         }
     },
 };

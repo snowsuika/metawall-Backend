@@ -4,7 +4,7 @@
     "title": "week6 JWT homework",
     "description": "Description"
   },
-  "host": "http://localhost:3000",
+  "host": "https://metawall-snow.herokuapp.com/",
   "basePath": "/",
   "tags": [],
   "schemes": [
@@ -670,6 +670,174 @@
         ]
       }
     },
+    "/post/{id}/likes": {
+      "post": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "新增貼文 like",
+        "description": "新增貼文 like API",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "貼文 id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "新增成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "628bb1ed0393677f3b363d5e"
+                      },
+                      "user": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "6289c7f495b59512e12e4b5e"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "snow_upate"
+                          },
+                          "photo": {
+                            "type": "string",
+                            "example": ""
+                          }
+                        }
+                      },
+                      "image": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "content": {
+                        "type": "string",
+                        "example": "123"
+                      },
+                      "likes": {
+                        "type": "array",
+                        "items": {}
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2022-05-23T16:10:21.102Z"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "取消貼文按讚",
+        "description": "取消貼文按讚 API",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "貼文 id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "新增成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "628bb1ed0393677f3b363d5e"
+                      },
+                      "user": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "6289c7f495b59512e12e4b5e"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "snow_upate"
+                          },
+                          "photo": {
+                            "type": "string",
+                            "example": ""
+                          }
+                        }
+                      },
+                      "image": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "content": {
+                        "type": "string",
+                        "example": "123"
+                      },
+                      "likes": {
+                        "type": "array",
+                        "items": {}
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2022-05-23T16:10:21.102Z"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/user/profile": {
       "get": {
         "tags": [
@@ -782,6 +950,81 @@
                     "sex": {
                       "type": "string",
                       "example": "female"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/user/likeList": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "取得我按讚的文章",
+        "description": "取得我按讚的文章 API",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "更新成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "628bb1ed0393677f3b363d5e"
+                      },
+                      "user": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "6289c7f495b59512e12e4b5e"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "snow_upate"
+                          }
+                        }
+                      },
+                      "image": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "content": {
+                        "type": "string",
+                        "example": "123"
+                      },
+                      "likes": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2022-05-23T16:10:21.102Z"
+                      }
                     }
                   }
                 }

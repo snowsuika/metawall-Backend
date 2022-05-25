@@ -73,6 +73,44 @@ router.patch(
     handleErrorAsyncWrapper(isAuth),
     handleErrorAsyncWrapper(UsersControllers.updateProfile)
 );
+/**
+ *  取得我按讚的文章 /user/likeList
+ */
+router.get(
+    /** #swagger.tags = ['User']
+ * #swagger.summary = '取得我按讚的文章'
+ * #swagger.description = '取得我按讚的文章 API'
+ * #swagger.security = [{
+        "apiKeyAuth": []
+    }]
+
+  * #swagger.responses[200] = {
+      description: '更新成功',
+      schema: {
+    "status": "success",
+    "data": [
+                {
+                    "_id": "628bb1ed0393677f3b363d5e",
+                    "user": {
+                        "_id": "6289c7f495b59512e12e4b5e",
+                        "name": "snow_upate"
+                    },
+                    "image": "",
+                    "content": "123",
+                    "likes": [
+                        "6289e9228e3af57469e8b18c"
+                    ],
+                    "createdAt": "2022-05-23T16:10:21.102Z"
+                }
+            ]
+                }
+        }
+    }
+  */
+    '/user/likeList',
+    handleErrorAsyncWrapper(isAuth),
+    handleErrorAsyncWrapper(UsersControllers.getLikeList)
+);
 
 /**
  *  GET  全部 (admin) /users
