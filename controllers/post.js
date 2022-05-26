@@ -71,6 +71,7 @@ const posts = {
             },
             {
                 new: true,
+                runValidators: true,
             }
         );
 
@@ -110,6 +111,7 @@ const posts = {
             { $addToSet: { likes: userId } },
             {
                 new: true,
+                runValidators: true,
             }
         );
 
@@ -128,6 +130,7 @@ const posts = {
             { $pull: { likes: userId } },
             {
                 new: true,
+                runValidators: true,
             }
         );
 

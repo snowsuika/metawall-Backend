@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "week6 JWT homework",
+    "title": "week7 Imgur 圖片上傳",
     "description": "Description"
   },
   "host": "https://metawall-snow.herokuapp.com/",

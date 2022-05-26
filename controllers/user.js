@@ -40,6 +40,7 @@ const users = {
             },
             {
                 new: true,
+                runValidators: true,
             }
         );
 
@@ -85,7 +86,7 @@ const users = {
                 photo,
                 sex,
             },
-            { new: true }
+            { new: true, runValidators: true }
         );
 
         if (updatedProfile) {

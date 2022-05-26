@@ -30,8 +30,11 @@ const auth = {
         )
             return next(new appError('欄位未填寫正確！', 400));
 
+        const passwordReg = '^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,20}$';
         if (password !== confirmPassword) return next(new appError('密碼不一致！', 400));
-        if (!validator.isLength(password, { min: 8 })) return next(new appError('密碼低於 8 碼！', 400));
+        if (!validator.isLength(name, { min: 2, max: 10 })) return next(new appError('暱稱須介於 2 ~ 10 個字！', 400));
+        if (!validator.matches(password, passwordReg))
+            return next(new appError('密碼必須為英文、數字混合 8~20 個字元！', 400));
         if (!validator.isEmail(email)) return next(new appError('E-mail 格式不正確', 400));
         if (await User.findOne({ email })) return next(new appError('該 email 已被註冊！', 400));
 
@@ -95,8 +98,8 @@ const auth = {
 
         //  1) 驗證欄位 a. 是否都相同 b. 是否與之前密碼相同
         if (password !== confirmPassword) return next(new appError('密碼不一致', 400));
-        if (!validator.isLength(password, { min: 8 })) return next(new appError('密碼低於 8 碼！', 400));
         if (await bcrypt.compare(password, user.password)) return next(new appError('密碼不得與之前相同', 400));
+        if (!validator.isLength(password, { min: 8 })) return next(new appError('密碼低於 8 碼！', 400));
 
         //  2) 寫入資料庫
         const updataDB = await User.findByIdAndUpdate(req.user?.id, {
