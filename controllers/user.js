@@ -101,10 +101,15 @@ const users = {
 
         const likeList = await Post.find({
             likes: { $in: [userId] },
-        }).populate({
-            path: 'user',
-            select: '_id name',
-        });
+        })
+            .populate({
+                path: 'likes',
+                select: '_id name',
+            })
+            .populate({
+                path: 'user',
+                select: '_id name',
+            });
 
         if (likeList) {
             handleSuccess(req, res, likeList);

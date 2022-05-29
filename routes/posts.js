@@ -312,4 +312,22 @@ router.delete(
     handleErrorAsyncWrapper(PostsControllers.deleteLike)
 );
 
+/**
+ *  取得某個使用者的 comment
+ */
+router.get(
+    '/post/:id/comments',
+    handleErrorAsyncWrapper(isAuth),
+    handleErrorAsyncWrapper(PostsControllers.getComments)
+);
+
+/**
+ *  新增貼文的 comment
+ */
+router.post(
+    '/post/:id/comment',
+    handleErrorAsyncWrapper(isAuth),
+    handleErrorAsyncWrapper(PostsControllers.cteateComment)
+);
+
 module.exports = router;

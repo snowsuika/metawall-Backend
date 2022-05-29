@@ -31,6 +31,8 @@ const resErrorProd = (err, res) => {
 
 // export 錯誤處理 function
 const errorHandler = (err, req, res, next) => {
+    console.log('==err===', err);
+
     // 有被 appError 攔截。自定義可預期錯誤
     if (err.isOperational) {
         err.message = err.message;

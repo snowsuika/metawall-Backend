@@ -2,22 +2,32 @@ const mongoose = require('mongoose');
 // Model
 const Post = require('../models/postsModel');
 const User = require('../models/usersModel');
+const Comment = require('../models/commentsModel');
 
 // Service
 const handleSuccess = require('../service/handlesSuccess');
 const appError = require('../service/appError');
 
 const posts = {
+    /**
+     * Post 貼文 CRUD
+     */
     getAllPost: async (req, res, next) => {
         let query = {
             keyword: req.query.keyword !== undefined ? { content: new RegExp(req.query.keyword) } : {},
             sort: req.query.sort === 'asc' ? 'createdAt' : '-createdAt',
         };
 
-        const allPosts = await Post.find(query.keyword).sort(query.sort).populate({
-            path: 'user',
-            select: 'name photo',
-        });
+        const allPosts = await Post.find(query.keyword)
+            .sort(query.sort)
+            .populate({
+                path: 'user',
+                select: 'name photo',
+            })
+            .populate({
+                path: 'comments',
+                select: 'user comment',
+            });
 
         handleSuccess(req, res, allPosts);
     },
@@ -25,7 +35,10 @@ const posts = {
     getOnePost: async (req, res, next) => {
         const id = req.params?.id;
         if (!mongoose.isObjectIdOrHexString(id)) return next(new appError('請確認 id 是否正確', 400));
-        const post = await Post.findById(id);
+        const post = await Post.findById(id).populate({
+            path: 'comments',
+            select: 'user comment',
+        });
         if (post) {
             handleSuccess(req, res, post);
         } else {
@@ -102,6 +115,10 @@ const posts = {
         handleSuccess(req, res, allPosts);
     },
 
+    /**
+     * Likes 貼文按讚 / 收回讚
+     */
+
     createLike: async (req, res, next) => {
         const userId = req.user?._id; //要被新增進去的 userId
         const postId = req.params?.id;
@@ -138,6 +155,45 @@ const posts = {
             handleSuccess(req, res, updateLikes);
         } else {
             return next(new appError('取消 like 失敗', 400));
+        }
+    },
+
+    /**
+     * comment 貼文留言
+     */
+    getComments: async (req, res, next) => {
+        const postId = req.params?.id;
+        const posts = await Post.find({ _id: postId }).populate({
+            path: 'comments',
+            select: 'comment user',
+        });
+        if (posts) {
+            handleSuccess(req, res, {
+                status: 'success',
+                results: posts.length,
+                posts,
+            });
+        } else {
+            return next(new appError('取得評論失敗', 400));
+        }
+    },
+    cteateComment: async (req, res, next) => {
+        const userId = req.user?.id;
+        const postId = req.params?.id;
+        const { comment } = req.body;
+
+        const newComment = await Comment.create({
+            user: userId,
+            post: postId,
+            comment,
+        });
+
+        console.log('newComment', newComment);
+
+        if (newComment) {
+            handleSuccess(req, res, newComment);
+        } else {
+            return next(new appError('新增評論失敗', 400));
         }
     },
 };
