@@ -6,7 +6,7 @@ const handleErrorAsyncWrapper = require('../service/handleErrorAsync');
 // middlewares
 const isAuth = require('../middlewares/isAuth');
 
-/**
+/****************************************************************
  *  GET  取得全部貼文
  */
 router.get(
@@ -228,8 +228,8 @@ router.delete(
     handleErrorAsyncWrapper(PostsControllers.deleteAllPost)
 );
 
-/**
- *  POST 貼文增加 like
+/******************************************************************
+ *  POST 貼文按讚
  */
 router.post(
     /** #swagger.tags = ['Post']
@@ -265,7 +265,7 @@ router.post(
             }
           }
  */
-    '/post/:id/likes',
+    '/post/:postId/like',
     handleErrorAsyncWrapper(isAuth),
     handleErrorAsyncWrapper(PostsControllers.createLike)
 );
@@ -307,27 +307,36 @@ router.delete(
           }
         }
 */
-    '/post/:id/likes',
+    '/post/:postId/like',
     handleErrorAsyncWrapper(isAuth),
     handleErrorAsyncWrapper(PostsControllers.deleteLike)
 );
 
-/**
- *  取得某個使用者的 comment
+/****************************************************************
+ *  新增貼文的留言
  */
-router.get(
-    '/post/:id/comments',
+router.post(
+    '/post/:postId/comment',
     handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(PostsControllers.getComments)
+    handleErrorAsyncWrapper(PostsControllers.cteateComment)
 );
 
 /**
- *  新增貼文的 comment
+ *  刪除貼文的留言
  */
-router.post(
-    '/post/:id/comment',
+router.delete(
+    '/post/:postId/comment/:commentId',
     handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(PostsControllers.cteateComment)
+    handleErrorAsyncWrapper(PostsControllers.deleteComment)
+);
+
+/****************************************************************
+ *  取得個人所有貼文
+ */
+router.get(
+    '/post/user/:userId',
+    handleErrorAsyncWrapper(isAuth),
+    handleErrorAsyncWrapper(PostsControllers.getPersonalPosts)
 );
 
 module.exports = router;
