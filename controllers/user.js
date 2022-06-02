@@ -5,7 +5,7 @@ const appError = require('../service/appError');
 
 const users = {
     getAllUsers: async (req, res, next) => {
-        const allUsers = await User.find();
+        const allUsers = await User.find().exec();
         handleSuccess(req, res, allUsers);
     },
 
@@ -63,6 +63,9 @@ const users = {
         }
     },
 
+    /****************************************************************
+     * 個人資料
+     */
     getProfile: async (req, res, next) => {
         const userId = req.user?._id; //== 有經過 isAuth middleware，取得的 user 是驗證過的 ==
 
@@ -96,6 +99,10 @@ const users = {
         }
     },
 
+    /****************************************************************
+     * 個人按讚列表
+     */
+
     getLikeList: async (req, res, next) => {
         const userId = req.user?._id;
 
@@ -116,6 +123,82 @@ const users = {
         } else {
             return next(new appError('取得按讚文章失敗', 400));
         }
+    },
+
+    /****************************************************************
+     * 個人追蹤
+     */
+    // 取得個人追蹤名單
+    getFollowingList: async (req, res, next) => {},
+
+    // 追蹤朋友
+    createFollow: async (req, res, next) => {
+        const followUserId = req.params?.userId; //被追蹤的對象
+        const selfUserId = req.user?.id;
+        if (followUserId === selfUserId) return next(new appError('您無法追蹤自己', 401));
+
+        // 自己的 `following` 要新增 `被追蹤者`
+        await User.findOneAndUpdate(
+            {
+                _id: selfUserId,
+                'following.user': { $ne: followUserId },
+            },
+            {
+                $addToSet: { following: { user: followUserId } },
+            },
+            {
+                runValidators: true,
+            }
+        );
+        // `被追蹤者` 的 `followers` 也要新增被追蹤者
+        await User.findOneAndUpdate(
+            {
+                _id: followUserId,
+                'followers.user': { $ne: selfUserId },
+            },
+            {
+                $addToSet: { followers: { user: selfUserId } },
+            },
+            {
+                runValidators: true,
+            }
+        );
+
+        handleSuccess(req, res, { data: '您已成功追蹤！' });
+    },
+
+    // 取消追蹤朋友
+    deleteFollow: async (req, res, next) => {
+        const followUserId = req.params?.userId; //被追蹤的對象
+        const selfUserId = req.user?.id;
+        if (followUserId === selfUserId) return next(new appError('您無法取消追蹤自己', 401));
+
+        // 自己的 `following` 要刪除 `被追蹤者`
+        await User.findOneAndUpdate(
+            {
+                _id: selfUserId,
+            },
+            {
+                $pull: { following: { user: followUserId } },
+            },
+            {
+                runValidators: true,
+            }
+        );
+        // `被追蹤者` 的 `followers` 也要刪除被追蹤者
+        await User.findOneAndUpdate(
+            {
+                _id: followUserId,
+            },
+            {
+                $pull: { followers: { user: selfUserId } },
+            },
+            {
+                runValidators: true,
+            }
+        );
+
+        handleSuccess(req, res, { data: '您已成功取消追蹤！' });
     },
 };
 

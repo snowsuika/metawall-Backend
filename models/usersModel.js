@@ -38,6 +38,32 @@ const usersSchema = new mongoose.Schema(
             default: Date.now,
             select: false,
         },
+        // 被追蹤
+        followers: [
+            {
+                user: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'User',
+                },
+                createdAt: {
+                    type: Date,
+                    default: Date.now,
+                },
+            },
+        ],
+        // 追蹤
+        following: [
+            {
+                user: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'User',
+                },
+                createdAt: {
+                    type: Date,
+                    default: Date.now,
+                },
+            },
+        ],
     },
     { versionKey: false }
 );

@@ -12,6 +12,7 @@ const posts = {
     /**
      * Post 貼文 CRUD
      */
+
     getAllPost: async (req, res, next) => {
         let query = {
             keyword: req.query.keyword !== undefined ? { content: new RegExp(req.query.keyword) } : {},
@@ -49,6 +50,7 @@ const posts = {
     createPost: async (req, res, next) => {
         const { user, image, content } = req.body;
 
+        // 檢查 id 格式
         if (!mongoose.isObjectIdOrHexString(user)) return next(new appError('請確認 userId 是否正確', 400));
 
         const isUserExist = await User.findById(user).exec();
@@ -115,13 +117,14 @@ const posts = {
         handleSuccess(req, res, allPosts);
     },
 
-    /**
-     * Likes 貼文按讚 / 收回讚
+    /****************************************************************
+     * 貼文按讚 / 收回讚
      */
-
     createLike: async (req, res, next) => {
-        const userId = req.user?._id; //要被新增進去的 userId
-        const postId = req.params?.id;
+        const userId = req.user._id; //要被新增進去的 userId
+        const { postId } = req.params;
+
+        if (!mongoose.isObjectIdOrHexString(postId)) return next(new appError('請確認 id 是否正確', 400));
 
         const updateLikes = await Post.findByIdAndUpdate(
             { _id: postId },
@@ -138,9 +141,12 @@ const posts = {
             return next(new appError('新增 like 失敗', 400));
         }
     },
+
     deleteLike: async (req, res, next) => {
         const userId = req.user?._id; //要被新增進去的 userId
-        const postId = req.params?.id;
+        const { postId } = req.params;
+
+        if (!mongoose.isObjectIdOrHexString(postId)) return next(new appError('請確認 id 是否正確', 400));
 
         const updateLikes = await Post.findByIdAndUpdate(
             { _id: postId },
@@ -158,29 +164,17 @@ const posts = {
         }
     },
 
-    /**
+    /****************************************************************
      * comment 貼文留言
      */
-    getComments: async (req, res, next) => {
-        const postId = req.params?.id;
-        const posts = await Post.find({ _id: postId }).populate({
-            path: 'comments',
-            select: 'comment user',
-        });
-        if (posts) {
-            handleSuccess(req, res, {
-                status: 'success',
-                results: posts.length,
-                posts,
-            });
-        } else {
-            return next(new appError('取得評論失敗', 400));
-        }
-    },
+
+    //新增一則貼文留言
     cteateComment: async (req, res, next) => {
         const userId = req.user?.id;
-        const postId = req.params?.id;
+        const { postId } = req.params;
         const { comment } = req.body;
+
+        if (!mongoose.isObjectIdOrHexString(postId)) return next(new appError('請確認 id 是否正確', 400));
 
         const newComment = await Comment.create({
             user: userId,
@@ -188,13 +182,57 @@ const posts = {
             comment,
         });
 
-        console.log('newComment', newComment);
-
         if (newComment) {
             handleSuccess(req, res, newComment);
         } else {
             return next(new appError('新增評論失敗', 400));
         }
+    },
+    //刪除一則貼文留言
+    deleteComment: async (req, res, next) => {
+        const userId = req.user.id;
+        const { postId, commentId } = req.params;
+        if (!mongoose.isObjectIdOrHexString(postId) || !mongoose.isObjectIdOrHexString(commentId))
+            return next(new appError('請確認 id 是否正確', 400));
+
+        // 確認刪除的 Comment 是不是由自己發的
+        const deleteCommentData = await Comment.findOneAndDelete(
+            {
+                _id: commentId,
+                user: userId,
+            },
+            {
+                new: true,
+                runValidators: true,
+            }
+        ).exec();
+
+        if (deleteCommentData) {
+            handleSuccess(req, res, deleteCommentData);
+        } else {
+            return next(new appError('刪除貼文失敗！', 400));
+        }
+    },
+
+    /****************************************************************
+     * 取得個人所有貼文
+     */
+    getPersonalPosts: async (req, res, next) => {
+        const { userId } = req.params;
+        if (!mongoose.isObjectIdOrHexString(userId)) return next(new appError('請確認 id 是否正確', 400));
+
+        // 確認這個使用者是否存在
+        const isExistUser = await User.findById({ _id: userId }).exec();
+        if (!isExistUser) return next(new appError('該使用者不存在', 400));
+
+        const result = await Post.find({ user: userId })
+            .populate({
+                path: 'comments',
+                select: 'user comment createdAt -post',
+            })
+            .exec();
+
+        handleSuccess(req, res, { data: result });
     },
 };
 
