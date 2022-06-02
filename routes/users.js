@@ -9,7 +9,7 @@ const handleErrorAsyncWrapper = require('../service/handleErrorAsync');
 // middlewares
 const isAuth = require('../middlewares/isAuth');
 
-/**
+/****************************************************************
  *  取得個人資料 /user/profile
  */
 router.get(
@@ -73,7 +73,7 @@ router.patch(
     handleErrorAsyncWrapper(isAuth),
     handleErrorAsyncWrapper(UsersControllers.updateProfile)
 );
-/**
+/****************************************************************
  *  取得我按讚的文章 /user/likeList
  */
 router.get(
@@ -112,7 +112,33 @@ router.get(
     handleErrorAsyncWrapper(UsersControllers.getLikeList)
 );
 
+/****************************************************************
+ *  取得個人追蹤名單 /user/following
+ */
+router.get(
+    '/user/following',
+    handleErrorAsyncWrapper(isAuth),
+    handleErrorAsyncWrapper(UsersControllers.getFollowingList)
+);
+
 /**
+ *  追蹤朋友  /user/following/:userId
+ */
+router.post(
+    '/user/following/:userId',
+    handleErrorAsyncWrapper(isAuth),
+    handleErrorAsyncWrapper(UsersControllers.createFollow)
+);
+/**
+ *  取消追蹤朋友  /user/following/:userId
+ */
+router.delete(
+    '/user/following/:userId',
+    handleErrorAsyncWrapper(isAuth),
+    handleErrorAsyncWrapper(UsersControllers.deleteFollow)
+);
+
+/****************************************************************
  *  GET  全部 (admin) /users
  */
 router.get(
