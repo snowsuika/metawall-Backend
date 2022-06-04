@@ -19,8 +19,6 @@ const errorHandler = require('./middlewares/errorHandler.js');
 
 // 處理未捕獲的異常，沒有寫 try catch
 process.on('uncaughtException', (err, origin) => {
-    console.error('======== uncaught Exception! =========');
-    console.log(err);
     process.exit(1); //用於結束 process 的方法
 });
 
@@ -59,7 +57,6 @@ app.use(errorHandler);
 
 // 有使用到 promise。處理沒有捕獲到的 catch
 process.on('unhandledRejection', (reason, promise) => {
-    console.log('====== 沒有捕獲到的 catch =====');
     console.log('Unhandled Rejection at:', promise, 'reason:', reason);
 });
 

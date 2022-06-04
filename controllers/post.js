@@ -5,6 +5,7 @@ const User = require('../models/usersModel');
 const Comment = require('../models/commentsModel');
 
 // Service
+const handleErrorAsyncWrapper = require('../service/handleErrorAsync');
 const handleSuccess = require('../service/handlesSuccess');
 const appError = require('../service/appError');
 
@@ -12,8 +13,7 @@ const posts = {
     /**
      * Post 貼文 CRUD
      */
-
-    getAllPost: async (req, res, next) => {
+    getAllPost: handleErrorAsyncWrapper(async (req, res, next) => {
         let query = {
             keyword: req.query.keyword !== undefined ? { content: new RegExp(req.query.keyword) } : {},
             sort: req.query.sort === 'asc' ? 'createdAt' : '-createdAt',
@@ -30,23 +30,25 @@ const posts = {
                 select: 'user comment',
             });
         handleSuccess(req, res, allPosts);
-    },
+    }),
 
-    getOnePost: async (req, res, next) => {
+    getOnePost: handleErrorAsyncWrapper(async (req, res, next) => {
         const id = req.params?.id;
+
         if (!mongoose.isObjectIdOrHexString(id)) return next(new appError('請確認 id 是否正確', 400));
         const post = await Post.findById(id).populate({
             path: 'comments',
             select: 'user comment',
         });
+
         if (post) {
             handleSuccess(req, res, post);
         } else {
             return next(new appError('資料取得失敗', 400));
         }
-    },
+    }),
 
-    createPost: async (req, res, next) => {
+    createPost: handleErrorAsyncWrapper(async (req, res, next) => {
         const userId = req.user._id;
         const { image, content } = req.body;
 
@@ -61,9 +63,9 @@ const posts = {
         } else {
             return next(new appError(err.message, 400));
         }
-    },
+    }),
 
-    updatePosts: async (req, res, next) => {
+    updatePosts: handleErrorAsyncWrapper(async (req, res, next) => {
         const { postId } = req.params;
         const data = req.body;
 
@@ -86,9 +88,9 @@ const posts = {
         } else {
             return next(new appError('更新失敗，請確認 id 是否正確', 400));
         }
-    },
+    }),
 
-    deleteOnePost: async (req, res, next) => {
+    deleteOnePost: handleErrorAsyncWrapper(async (req, res, next) => {
         const { postId } = req.params;
 
         if (!mongoose.isObjectIdOrHexString(postId)) return next(new appError('請確認 id 是否正確', 400));
@@ -100,12 +102,12 @@ const posts = {
         } else {
             return next(new appError('刪除失敗，請確認 id 是否正確。', 400));
         }
-    },
+    }),
 
     /****************************************************************
      * 貼文按讚 / 收回讚
      */
-    createLike: async (req, res, next) => {
+    createLike: handleErrorAsyncWrapper(async (req, res, next) => {
         const userId = req.user._id; //要被新增進去的 userId
         const { postId } = req.params;
 
@@ -125,9 +127,9 @@ const posts = {
         } else {
             return next(new appError('貼文按讚失敗', 400));
         }
-    },
+    }),
 
-    deleteLike: async (req, res, next) => {
+    deleteLike: handleErrorAsyncWrapper(async (req, res, next) => {
         const userId = req.user?._id; //要被新增進去的 userId
         const { postId } = req.params;
 
@@ -147,14 +149,14 @@ const posts = {
         } else {
             return next(new appError('貼文收回讚失敗', 400));
         }
-    },
+    }),
 
     /****************************************************************
      * comment 貼文留言
      */
 
     //新增一則貼文留言
-    cteateComment: async (req, res, next) => {
+    cteateComment: handleErrorAsyncWrapper(async (req, res, next) => {
         const userId = req.user?.id;
         const { postId } = req.params;
         const { comment } = req.body;
@@ -172,9 +174,9 @@ const posts = {
         } else {
             return next(new appError('新增評論失敗', 400));
         }
-    },
+    }),
     //刪除一則貼文留言
-    deleteComment: async (req, res, next) => {
+    deleteComment: handleErrorAsyncWrapper(async (req, res, next) => {
         const userId = req.user.id;
         const { postId, commentId } = req.params;
         if (!mongoose.isObjectIdOrHexString(postId) || !mongoose.isObjectIdOrHexString(commentId))
@@ -197,12 +199,12 @@ const posts = {
         } else {
             return next(new appError('刪除貼文失敗！', 400));
         }
-    },
+    }),
 
     /****************************************************************
      * 取得個人所有貼文
      */
-    getPersonalPosts: async (req, res, next) => {
+    getPersonalPosts: handleErrorAsyncWrapper(async (req, res, next) => {
         const { userId } = req.params;
         if (!mongoose.isObjectIdOrHexString(userId)) return next(new appError('請確認 id 是否正確', 400));
 
@@ -218,7 +220,7 @@ const posts = {
             .exec();
 
         handleSuccess(req, res, { data: result });
-    },
+    }),
 };
 
 module.exports = posts;

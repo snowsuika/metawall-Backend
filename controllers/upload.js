@@ -2,11 +2,12 @@ const { ImgurClient } = require('imgur');
 const sizeOf = require('image-size');
 
 // Service
+const handleErrorAsyncWrapper = require('../service/handleErrorAsync');
 const handleSuccess = require('../service/handlesSuccess');
 const appError = require('../service/appError');
 
 const upload = {
-    uploadImage: async (req, res, next) => {
+    uploadImage: handleErrorAsyncWrapper(async (req, res, next) => {
         if (!req?.files?.length) return next(new appError('尚未上傳檔案！', 400));
 
         const { type } = req.body;
@@ -35,7 +36,7 @@ const upload = {
             status: 'success',
             imgUrl: response.data.link,
         });
-    },
+    }),
 };
 
 module.exports = upload;

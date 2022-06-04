@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
+
+// controllers
 const PostsControllers = require('../controllers/post.js');
-const handleErrorAsyncWrapper = require('../service/handleErrorAsync');
 
 // middlewares
 const isAuth = require('../middlewares/isAuth');
@@ -52,8 +53,8 @@ router.get(
         }
       */
     '/posts',
-    handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(PostsControllers.getAllPost)
+    isAuth,
+    PostsControllers.getAllPost
 );
 
 /**
@@ -90,8 +91,8 @@ router.get(
         }
       */
     '/post/:id',
-    handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(PostsControllers.getOnePost)
+    isAuth,
+    PostsControllers.getOnePost
 );
 /**
  *  POST 新增貼文
@@ -130,8 +131,8 @@ router.post(
         }
       */
     '/post',
-    handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(PostsControllers.createPost)
+    isAuth,
+    PostsControllers.createPost
 );
 
 /**
@@ -176,8 +177,8 @@ router.patch(
         }
       */
     '/post/:postId',
-    handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(PostsControllers.updatePosts)
+    isAuth,
+    PostsControllers.updatePosts
 );
 
 /**
@@ -205,8 +206,8 @@ router.delete(
         }
       */
     '/post/:postId',
-    handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(PostsControllers.deleteOnePost)
+    isAuth,
+    PostsControllers.deleteOnePost
 );
 
 /******************************************************************
@@ -248,8 +249,8 @@ router.post(
               }
       */
     '/post/:postId/like',
-    handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(PostsControllers.createLike)
+    isAuth,
+    PostsControllers.createLike
 );
 
 /**
@@ -285,8 +286,8 @@ router.delete(
               }
       */
     '/post/:postId/like',
-    handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(PostsControllers.deleteLike)
+    isAuth,
+    PostsControllers.deleteLike
 );
 
 /****************************************************************
@@ -320,8 +321,8 @@ router.post(
               }
       */
     '/post/:postId/comment',
-    handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(PostsControllers.cteateComment)
+    isAuth,
+    PostsControllers.cteateComment
 );
 
 /**
@@ -355,8 +356,8 @@ router.delete(
               }
       */
     '/post/:postId/comment/:commentId',
-    handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(PostsControllers.deleteComment)
+    isAuth,
+    PostsControllers.deleteComment
 );
 
 /****************************************************************
@@ -399,8 +400,8 @@ router.get(
               }
       */
     '/post/user/:userId',
-    handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(PostsControllers.getPersonalPosts)
+    isAuth,
+    PostsControllers.getPersonalPosts
 );
 
 module.exports = router;

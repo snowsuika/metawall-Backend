@@ -3,9 +3,6 @@ var router = express.Router();
 // controllers
 const UsersControllers = require('../controllers/user.js');
 
-//service
-const handleErrorAsyncWrapper = require('../service/handleErrorAsync');
-
 // middlewares
 const isAuth = require('../middlewares/isAuth');
 
@@ -33,8 +30,8 @@ router.get(
         }
       */
     '/user/profile',
-    handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(UsersControllers.getProfile)
+    isAuth,
+    UsersControllers.getProfile
 );
 /**
  *  更新個人資料 /user/profile/:id
@@ -70,8 +67,8 @@ router.patch(
         }
       */
     '/user/profile',
-    handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(UsersControllers.updateProfile)
+    isAuth,
+    UsersControllers.updateProfile
 );
 /****************************************************************
  *  取得個人按讚列表 /user/likeList
@@ -113,8 +110,8 @@ router.get(
         }
       */
     '/user/likeList',
-    handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(UsersControllers.getLikeList)
+    isAuth,
+    UsersControllers.getLikeList
 );
 
 /****************************************************************
@@ -138,8 +135,8 @@ router.get(
           }
         */
     '/user/following',
-    handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(UsersControllers.getFollowingList)
+    isAuth,
+    UsersControllers.getFollowingList
 );
 
 /**
@@ -163,8 +160,8 @@ router.post(
           }
         */
     '/user/following/:userId',
-    handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(UsersControllers.createFollow)
+    isAuth,
+    UsersControllers.createFollow
 );
 /**
  *  取消追蹤朋友  /user/following/:userId
@@ -187,8 +184,8 @@ router.delete(
           }
       */
     '/user/following/:userId',
-    handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(UsersControllers.deleteFollow)
+    isAuth,
+    UsersControllers.deleteFollow
 );
 
 module.exports = router;

@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 const AuthControllers = require('../controllers/auth.js');
-const handleErrorAsyncWrapper = require('../service/handleErrorAsync');
 
 // middlewares
 const isAuth = require('../middlewares/isAuth');
@@ -38,7 +37,7 @@ router.post(
         }
      */
     '/register',
-    handleErrorAsyncWrapper(AuthControllers.register)
+    AuthControllers.register
 );
 
 /**
@@ -69,7 +68,7 @@ router.post(
         }
      */
     '/login',
-    handleErrorAsyncWrapper(AuthControllers.login)
+    AuthControllers.login
 );
 
 /**
@@ -102,8 +101,8 @@ router.post(
         }
      */
     '/updatePassword',
-    handleErrorAsyncWrapper(isAuth),
-    handleErrorAsyncWrapper(AuthControllers.updatePassword)
+    isAuth,
+    AuthControllers.updatePassword
 );
 
 module.exports = router;

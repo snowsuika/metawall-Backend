@@ -5,10 +5,9 @@ const User = require('../models/usersModel');
 const Post = require('../models/postsModel');
 
 // service
-
+const handleErrorAsyncWrapper = require('../service/handleErrorAsync');
 const handleSuccess = require('../service/handlesSuccess');
 const appError = require('../service/appError');
-//service
 
 const users = {
     /****************************************************************
@@ -26,7 +25,7 @@ const users = {
         }
     }),
 
-    updateProfile: async (req, res, next) => {
+    updateProfile: handleErrorAsyncWrapper(async (req, res, next) => {
         const userId = req.user?._id; //== 有經過 isAuth middleware，取得的 user 是驗證過的 ==
         const { name, photo, sex } = req.body;
 
@@ -45,13 +44,12 @@ const users = {
         } else {
             return next(new appError('更新失敗，請確認欄位', 400));
         }
-    },
+    }),
 
     /****************************************************************
      * 個人按讚列表
      */
-
-    getLikeList: async (req, res, next) => {
+    getLikeList: handleErrorAsyncWrapper(async (req, res, next) => {
         const userId = req.user?._id;
 
         const likeList = await Post.find({
@@ -68,13 +66,13 @@ const users = {
         } else {
             return next(new appError('取得按讚文章失敗', 400));
         }
-    },
+    }),
 
     /****************************************************************
      * 個人追蹤
      */
     // 取得個人追蹤名單
-    getFollowingList: async (req, res, next) => {
+    getFollowingList: handleErrorAsyncWrapper(async (req, res, next) => {
         const userId = req.user?.id;
 
         const followingList = await User.find({
@@ -90,10 +88,10 @@ const users = {
         } else {
             return next(new appError('取得個人追蹤名單失敗', 401));
         }
-    },
+    }),
 
     // 追蹤朋友
-    createFollow: async (req, res, next) => {
+    createFollow: handleErrorAsyncWrapper(async (req, res, next) => {
         const followUserId = req.params?.userId; //被追蹤的對象
         const selfUserId = req.user?.id;
         if (!mongoose.isObjectIdOrHexString(followUserId)) return next(new appError('請確認 id 是否正確', 400));
@@ -128,10 +126,10 @@ const users = {
         );
 
         handleSuccess(req, res, '您已成功追蹤!');
-    },
+    }),
 
     // 取消追蹤朋友
-    deleteFollow: async (req, res, next) => {
+    deleteFollow: handleErrorAsyncWrapper(async (req, res, next) => {
         const followUserId = req.params?.userId; //被追蹤的對象
         const selfUserId = req.user?.id;
 
@@ -164,7 +162,7 @@ const users = {
         );
 
         handleSuccess(req, res, '您已成功取消追蹤！');
-    },
+    }),
 };
 
 module.exports = users;

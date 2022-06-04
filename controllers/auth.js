@@ -5,12 +5,13 @@ const validator = require('validator');
 const User = require('../models/usersModel');
 
 // Service
+const handleErrorAsyncWrapper = require('../service/handleErrorAsync');
 const handleSuccess = require('../service/handlesSuccess');
 const generateJWT = require('../service/generateJWT');
 const appError = require('../service/appError');
 
 const auth = {
-    register: async (req, res, next) => {
+    register: handleErrorAsyncWrapper(async (req, res, next) => {
         let { name, email, sex, photo, password, confirmPassword } = req.body;
 
         // 1) validation 資料
@@ -58,8 +59,8 @@ const auth = {
         };
 
         handleSuccess(req, res, resData, 201);
-    },
-    login: async (req, res, next) => {
+    }),
+    login: handleErrorAsyncWrapper(async (req, res, next) => {
         const { email, password } = req.body;
         //  1) 驗證欄位
         if (
@@ -90,8 +91,8 @@ const auth = {
         } else {
             return next(new appError('密碼有誤', 400));
         }
-    },
-    updatePassword: async (req, res, next) => {
+    }),
+    updatePassword: handleErrorAsyncWrapper(async (req, res, next) => {
         const { password, confirmPassword } = req.body;
         const user = await User.findOne({ _id: req.user?._id }).select('+password');
         //== 有經過 isAuth middleware，取得的 user 是驗證過的 ==
@@ -108,7 +109,7 @@ const auth = {
         //  3) 給予 token
         const token = generateJWT(req.user);
         handleSuccess(req, res, { token });
-    },
+    }),
 };
 
 module.exports = auth;

@@ -3,9 +3,6 @@ var router = express.Router();
 // controllers
 const UploadControllers = require('../controllers/upload.js');
 
-//service
-const handleErrorAsyncWrapper = require('../service/handleErrorAsync');
-
 // middlewares
 const isAuth = require('../middlewares/isAuth');
 const upload = require('../middlewares/upload');
@@ -41,9 +38,9 @@ router.post(
         }
      */
     '/uploadImage',
-    handleErrorAsyncWrapper(isAuth),
+    isAuth,
     upload,
-    handleErrorAsyncWrapper(UploadControllers.uploadImage)
+    UploadControllers.uploadImage
 );
 
 module.exports = router;
