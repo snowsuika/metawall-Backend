@@ -20,23 +20,18 @@ const usersSchema = new mongoose.Schema(
             },
             required: [true, 'email 為必填'],
         },
-        photo: {
-            type: String,
-        },
-        sex: {
-            type: String,
-            enum: ['male', 'female'],
-        },
         password: {
             type: String,
             required: [true, '請輸入密碼'],
             minlength: 8,
             select: false,
         },
-        updatedAt: {
-            type: Date,
-            default: Date.now,
-            select: false,
+        photo: {
+            type: String,
+        },
+        sex: {
+            type: String,
+            enum: ['male', 'female'],
         },
         // 被追蹤
         followers: [
@@ -64,6 +59,11 @@ const usersSchema = new mongoose.Schema(
                 },
             },
         ],
+        updatedAt: {
+            type: Date,
+            default: Date.now,
+            select: false,
+        },
     },
     { versionKey: false }
 );

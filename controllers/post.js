@@ -29,7 +29,6 @@ const posts = {
                 path: 'comments',
                 select: 'user comment',
             });
-
         handleSuccess(req, res, allPosts);
     },
 
@@ -48,16 +47,11 @@ const posts = {
     },
 
     createPost: async (req, res, next) => {
-        const { user, image, content } = req.body;
-
-        // 檢查 id 格式
-        if (!mongoose.isObjectIdOrHexString(user)) return next(new appError('請確認 userId 是否正確', 400));
-
-        const isUserExist = await User.findById(user).exec();
-        if (!isUserExist) return next(new appError('使用者不存在', 400));
+        const userId = req.user._id;
+        const { image, content } = req.body;
 
         const newPost = await Post.create({
-            user,
+            user: userId,
             image,
             content,
         });
@@ -70,17 +64,14 @@ const posts = {
     },
 
     updatePosts: async (req, res, next) => {
-        const id = req.params?.id;
+        const { postId } = req.params;
         const data = req.body;
 
-        if (!mongoose.isObjectIdOrHexString(id)) return next(new appError('請確認 id 是否正確', 400));
+        if (!mongoose.isObjectIdOrHexString(postId)) return next(new appError('請確認 id 是否正確', 400));
 
         const updatePost = await Post.findByIdAndUpdate(
-            id,
+            postId,
             {
-                name: data.name,
-                tags: data.tags,
-                type: data.type,
                 image: data.image,
                 content: data.content,
             },
@@ -98,23 +89,17 @@ const posts = {
     },
 
     deleteOnePost: async (req, res, next) => {
-        const id = req.params?.id;
+        const { postId } = req.params;
 
-        if (!mongoose.isObjectIdOrHexString(id)) return next(new appError('請確認 id 是否正確', 400));
+        if (!mongoose.isObjectIdOrHexString(postId)) return next(new appError('請確認 id 是否正確', 400));
 
-        const isSuccessDelete = await Post.findByIdAndDelete(id);
+        const isSuccessDelete = await Post.findByIdAndDelete(postId);
         if (isSuccessDelete) {
             const allPosts = await Post.find();
-            handleSuccess(req, res, allPosts);
+            handleSuccess(req, res, '貼文刪除成功！');
         } else {
             return next(new appError('刪除失敗，請確認 id 是否正確。', 400));
         }
-    },
-
-    deleteAllPost: async (req, res, next) => {
-        await Post.deleteMany({});
-        const allPosts = await Post.find();
-        handleSuccess(req, res, allPosts);
     },
 
     /****************************************************************
@@ -126,7 +111,7 @@ const posts = {
 
         if (!mongoose.isObjectIdOrHexString(postId)) return next(new appError('請確認 id 是否正確', 400));
 
-        const updateLikes = await Post.findByIdAndUpdate(
+        const createLikes = await Post.findByIdAndUpdate(
             { _id: postId },
             { $addToSet: { likes: userId } },
             {
@@ -135,10 +120,10 @@ const posts = {
             }
         );
 
-        if (updateLikes) {
-            handleSuccess(req, res, updateLikes);
+        if (createLikes) {
+            handleSuccess(req, res, createLikes);
         } else {
-            return next(new appError('新增 like 失敗', 400));
+            return next(new appError('貼文按讚失敗', 400));
         }
     },
 
@@ -148,7 +133,7 @@ const posts = {
 
         if (!mongoose.isObjectIdOrHexString(postId)) return next(new appError('請確認 id 是否正確', 400));
 
-        const updateLikes = await Post.findByIdAndUpdate(
+        const deleteLikes = await Post.findByIdAndUpdate(
             { _id: postId },
             { $pull: { likes: userId } },
             {
@@ -157,10 +142,10 @@ const posts = {
             }
         );
 
-        if (updateLikes) {
-            handleSuccess(req, res, updateLikes);
+        if (deleteLikes) {
+            handleSuccess(req, res, deleteLikes);
         } else {
-            return next(new appError('取消 like 失敗', 400));
+            return next(new appError('貼文收回讚失敗', 400));
         }
     },
 
@@ -208,7 +193,7 @@ const posts = {
         ).exec();
 
         if (deleteCommentData) {
-            handleSuccess(req, res, deleteCommentData);
+            handleSuccess(req, res, '刪除留言成功！');
         } else {
             return next(new appError('刪除貼文失敗！', 400));
         }

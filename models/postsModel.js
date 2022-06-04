@@ -19,16 +19,16 @@ const postsSchema = new mongoose.Schema(
             type: String,
             required: [true, 'Content 為必填'],
         },
-        likes: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'User',
-            },
-        ],
+        likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     },
     {
         versionKey: false,
-        toJSON: { virtuals: true },
+        toJSON: {
+            virtuals: true,
+            transform: function (doc, ret) {
+                delete ret.id;
+            },
+        },
         toObject: { virtuals: true },
     }
 );

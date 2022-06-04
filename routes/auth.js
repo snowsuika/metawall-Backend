@@ -10,7 +10,7 @@ const isAuth = require('../middlewares/isAuth');
  *  註冊
  */
 router.post(
-    /**#swagger.tags = ['Auth']
+    /**#swagger.tags = ['註冊登入、改密碼 Auth']
      * #swagger.summary = '註冊新會員'
      * #swagger.description = '註冊新會員 API'
      * #swagger.parameters['body'] = {
@@ -45,7 +45,7 @@ router.post(
  *  登入
  */
 router.post(
-    /** #swagger.tags = ['Auth']
+    /**#swagger.tags = ['註冊登入、改密碼 Auth']
      * #swagger.summary = '會員登入'
      * #swagger.description = '會員登入 API'
      * #swagger.parameters['body'] = {
@@ -76,7 +76,7 @@ router.post(
  *  更新密碼
  */
 router.post(
-    /** #swagger.tags = ['Auth']
+    /**#swagger.tags = ['註冊登入、改密碼 Auth']
      * #swagger.summary = '更新密碼'
      * #swagger.description = '更改密碼 API'
      * #swagger.security = [{

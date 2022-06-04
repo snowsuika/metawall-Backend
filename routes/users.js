@@ -13,25 +13,25 @@ const isAuth = require('../middlewares/isAuth');
  *  取得個人資料 /user/profile
  */
 router.get(
-    /** #swagger.tags = ['User']
-   * #swagger.summary = '取得個人資料'
-   * #swagger.description = '取得個人資料 API'
-   * #swagger.security = [{
-          "apiKeyAuth": []
-      }]
-   * #swagger.responses[200] = {
-        description: '取得成功',
-        schema: {
-                    "status": "success",
-                    "data": {
-                        "_id": "62879351059803b16709db57",
-                        "name": "snowChu",
-                        "photo": "",
-                        "sex": "female"
-                    }
-              }
-      }
-    */
+    /** #swagger.tags = ['會員功能 User']
+     * #swagger.summary = '取得個人資料'
+     * #swagger.description = '取得個人資料 API'
+     * #swagger.security = [{
+            "apiKeyAuth": []
+        }]
+    * #swagger.responses[200] = {
+          description: '取得成功',
+          schema: {
+                      "status": "success",
+                      "data": {
+                          "_id": "62879351059803b16709db57",
+                          "name": "snowChu",
+                          "photo": "",
+                          "sex": "female"
+                      }
+                }
+        }
+      */
     '/user/profile',
     handleErrorAsyncWrapper(isAuth),
     handleErrorAsyncWrapper(UsersControllers.getProfile)
@@ -40,73 +40,78 @@ router.get(
  *  更新個人資料 /user/profile/:id
  */
 router.patch(
-    /** #swagger.tags = ['User']
-   * #swagger.summary = '更新個人資料'
-   * #swagger.description = '更新個人資料 API'
-   * #swagger.security = [{
-          "apiKeyAuth": []
-      }]
-   * #swagger.parameters['body'] = {
-        in: 'body',
-        description: '資料格式。sex : male;female',
-        required: true,
-        schema: {
-                "name": "snow_update",
-                "photo": "",
-                "sex": "female"
-          }
-      }
-    * #swagger.responses[200] = {
-        description: '更新成功',
-        schema: {
-                  "status": "success",
-                  "data": {
-                      "_id": "62879351059803b16709db57",
-                      "name": "snow_update",
-                      "photo": "",
-                      "sex": "female"
-                  }
-          }
-      }
-    */
+    /** #swagger.tags = ['會員功能 User']
+     * #swagger.summary = '更新個人資料'
+     * #swagger.description = '更新個人資料 API'
+     * #swagger.security = [{
+            "apiKeyAuth": []
+        }]
+    * #swagger.parameters['body'] = {
+          in: 'body',
+          description: '資料格式。sex : male;female',
+          required: true,
+          schema: {
+                  "name": "snow_update",
+                  "photo": "",
+                  "sex": "female"
+            }
+        }
+      * #swagger.responses[200] = {
+          description: '更新成功',
+          schema: {
+                    "status": "success",
+                    "data": {
+                        "_id": "62879351059803b16709db57",
+                        "name": "snow_update",
+                        "photo": "",
+                        "sex": "female"
+                    }
+            }
+        }
+      */
     '/user/profile',
     handleErrorAsyncWrapper(isAuth),
     handleErrorAsyncWrapper(UsersControllers.updateProfile)
 );
 /****************************************************************
- *  取得我按讚的文章 /user/likeList
+ *  取得個人按讚列表 /user/likeList
  */
 router.get(
-    /** #swagger.tags = ['User']
- * #swagger.summary = '取得我按讚的文章'
- * #swagger.description = '取得我按讚的文章 API'
- * #swagger.security = [{
-        "apiKeyAuth": []
-    }]
+    /** #swagger.tags = ['會員按讚追蹤動態 User']
+     * #swagger.summary = '取得個人按讚列表'
+     * #swagger.description = '取得個人按讚列表 API'
+     * #swagger.security = [{
+            "apiKeyAuth": []
+        }]
 
-  * #swagger.responses[200] = {
-      description: '更新成功',
-      schema: {
-    "status": "success",
-    "data": [
-                {
-                    "_id": "628bb1ed0393677f3b363d5e",
-                    "user": {
-                        "_id": "6289c7f495b59512e12e4b5e",
-                        "name": "snow_upate"
-                    },
-                    "image": "",
-                    "content": "123",
-                    "likes": [
-                        "6289e9228e3af57469e8b18c"
-                    ],
-                    "createdAt": "2022-05-23T16:10:21.102Z"
-                }
-            ]
-                }
+      * #swagger.responses[200] = {
+          description: '更新成功',
+          schema: {
+                    "status": "success",
+                    "data": [
+                        {
+                            "_id": "628f92a3392f24b2f7299cc6",
+                            "user": {
+                                "_id": "628f921f392f24b2f7299cb7",
+                                "name": "snow",
+                                "photo": ""
+                            },
+                            "createdAt": "2022-05-26T14:45:55.987Z"
+                        },
+                        {
+                            "_id": "62932c323e235d25404bccb1",
+                            "user": {
+                                "_id": "628f9251392f24b2f7299cba",
+                                "name": "小明",
+                                "photo": ""
+                            },
+                            "createdAt": "2022-05-29T08:17:54.236Z"
+                        }
+                    ]
+                    }
+            }
         }
-    }
-  */
+      */
     '/user/likeList',
     handleErrorAsyncWrapper(isAuth),
     handleErrorAsyncWrapper(UsersControllers.getLikeList)
@@ -116,6 +121,22 @@ router.get(
  *  取得個人追蹤名單 /user/following
  */
 router.get(
+    /** #swagger.tags = ['會員按讚追蹤動態 User']
+       * #swagger.summary = '取得個人追蹤名單'
+       * #swagger.description = '取得個人追蹤名單 API'
+       * #swagger.security = [{
+              "apiKeyAuth": []
+          }]
+
+        * #swagger.responses[200] = {
+            description: '追蹤成功',
+            schema: {
+                      "status": "success",
+                      "data": "您已成功追蹤！"
+                    }
+              }
+          }
+        */
     '/user/following',
     handleErrorAsyncWrapper(isAuth),
     handleErrorAsyncWrapper(UsersControllers.getFollowingList)
@@ -125,6 +146,22 @@ router.get(
  *  追蹤朋友  /user/following/:userId
  */
 router.post(
+    /** #swagger.tags = ['會員按讚追蹤動態 User']
+       * #swagger.summary = '追蹤朋友'
+       * #swagger.description = '追蹤朋友 API'
+       * #swagger.security = [{
+              "apiKeyAuth": []
+          }]
+
+        * #swagger.responses[200] = {
+            description: '追蹤成功',
+            schema: {
+                      "status": "success",
+                      "data": "您已成功追蹤！"
+                    }
+              }
+          }
+        */
     '/user/following/:userId',
     handleErrorAsyncWrapper(isAuth),
     handleErrorAsyncWrapper(UsersControllers.createFollow)
@@ -133,53 +170,25 @@ router.post(
  *  取消追蹤朋友  /user/following/:userId
  */
 router.delete(
+    /** #swagger.tags = ['會員按讚追蹤動態 User']
+       * #swagger.summary = '取消追蹤朋友'
+       * #swagger.description = '取消追蹤朋友 API'
+       * #swagger.security = [{
+              "apiKeyAuth": []
+          }]
+
+        * #swagger.responses[200] = {
+            description: '追蹤成功',
+            schema: {
+                      "status": "success",
+                      "data": "您已成功取消追蹤！"
+                    }
+              }
+          }
+      */
     '/user/following/:userId',
     handleErrorAsyncWrapper(isAuth),
     handleErrorAsyncWrapper(UsersControllers.deleteFollow)
-);
-
-/****************************************************************
- *  GET  全部 (admin) /users
- */
-router.get(
-    /**
-     * #swagger.ignore = true
-     */
-    '/users',
-    handleErrorAsyncWrapper(UsersControllers.getAllUsers)
-);
-
-/**
- *  POST (admin) /user
- */
-router.post(
-    /**
-     * #swagger.ignore = true
-     */
-    '/user',
-    handleErrorAsyncWrapper(UsersControllers.createUser)
-);
-
-/**
- *  PATCH (admin) /user/:id
- */
-router.patch(
-    /**
-     * #swagger.ignore = true
-     */
-    '/user/:id',
-    handleErrorAsyncWrapper(UsersControllers.updateUser)
-);
-
-/**
- *  DELETE 單筆 (admin) /user/:id
- */
-router.delete(
-    /**
-     * #swagger.ignore = true
-     */
-    '/user/:id',
-    handleErrorAsyncWrapper(UsersControllers.deleteOneUser)
 );
 
 module.exports = router;
