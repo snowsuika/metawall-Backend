@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "會員功能 | /auth",
+			"name": "登入註冊 | /auth",
 			"item": [
 				{
 					"name": "註冊 | /register",
@@ -59,7 +59,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\":\"wawa@gmail.com\",\n    \"password\":\"abcd1234\"\n}",
+							"raw": "{\n    \"email\":\"fafa@gmail.com\",\n    \"password\":\"abcd1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -117,6 +117,106 @@
 							"path": [
 								"auth",
 								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "登入註冊(OAuth) | /auth/google",
+			"item": [
+				{
+					"name": "登入 |/auth/google",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"description": "form-data",
+									"type": "file",
+									"src": "/Users/snow/Downloads/未命名-1.png"
+								},
+								{
+									"key": "type",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/auth/google",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"google"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "callback |/auth/google/callback",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"description": "form-data",
+									"type": "file",
+									"src": "/Users/snow/Downloads/未命名-1.png"
+								},
+								{
+									"key": "type",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/auth/google/callback",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"google",
+								"callback"
 							]
 						}
 					},
@@ -602,7 +702,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "62932c323e235d25404bccb1"
+									"value": "62a0d7e2e04f14cf6c238ba9"
 								}
 							]
 						}
