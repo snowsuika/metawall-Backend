@@ -27,7 +27,7 @@ const posts = {
             })
             .populate({
                 path: 'comments',
-                select: 'user comment',
+                select: 'user comment createdAt',
             });
         handleSuccess(req, res, allPosts);
     }),
@@ -108,6 +108,7 @@ const posts = {
      * 貼文按讚 / 收回讚
      */
     createLike: handleErrorAsyncWrapper(async (req, res, next) => {
+        console.log('=createLike==');
         const userId = req.user._id; //要被新增進去的 userId
         const { postId } = req.params;
 
@@ -121,7 +122,6 @@ const posts = {
                 runValidators: true,
             }
         );
-
         if (createLikes) {
             handleSuccess(req, res, createLikes);
         } else {
@@ -209,17 +209,30 @@ const posts = {
         if (!mongoose.isObjectIdOrHexString(userId)) return next(new appError('請確認 id 是否正確', 400));
 
         // 確認這個使用者是否存在
-        const isExistUser = await User.findById({ _id: userId }).exec();
-        if (!isExistUser) return next(new appError('該使用者不存在', 400));
+        const userInfo = await User.findById({ _id: userId }).exec();
+        if (!userInfo) return next(new appError('該使用者不存在', 400));
 
-        const result = await Post.find({ user: userId })
+        let query = {
+          keyword: req.query.keyword !== undefined ? { user: userId,content: new RegExp(req.query.keyword) } : {user: userId},
+            sort: req.query.sort === 'asc' ? 'createdAt' : '-createdAt',
+        };
+        const posts = await Post.find(query.keyword)
+            .sort(query.sort)
+            .populate({
+                path: 'user',
+                select: 'name photo followers',
+            })
             .populate({
                 path: 'comments',
                 select: 'user comment createdAt -post',
-            })
-            .exec();
+            }).exec();
 
-        handleSuccess(req, res, { data: result });
+        const resObj = {
+          userInfo,
+          posts
+        }
+
+        handleSuccess(req, res, resObj);
     }),
 };
 

@@ -28,9 +28,11 @@ const usersSchema = new mongoose.Schema(
         },
         photo: {
             type: String,
+            default:''
         },
         sex: {
             type: String,
+            default:'male',
             enum: ['male', 'female'],
         },
         // 被追蹤
@@ -63,6 +65,9 @@ const usersSchema = new mongoose.Schema(
             type: Date,
             default: Date.now,
             select: false,
+        },
+        googleId: {
+            type: String,
         },
     },
     { versionKey: false }

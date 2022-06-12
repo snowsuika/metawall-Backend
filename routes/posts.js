@@ -370,6 +370,18 @@ router.get(
           * #swagger.security = [{
                 "apiKeyAuth": []
               }]
+          * #swagger.parameters['keyword'] = {
+                in: 'query',
+                description: '貼文關鍵字查詢',
+                type: 'string',
+                required: false,
+            }
+          * #swagger.parameters['sort'] = {
+                  in: 'query',
+                  description: '貼文排序 (新 -> 舊:desc ; 舊 -> 新 :asc ; 預設 desc)',
+                  type: 'string',
+                  required: false,
+            }
           * #swagger.parameters['userId'] = {
                 in: 'path',
                 description: '使用者 id',
@@ -380,22 +392,33 @@ router.get(
               description: '取得成功',
               schema: {
                     "status": "success",
-                    "data": [
-                        {
-                            "_id": "62932c323e235d25404bccb1",
-                            "user": {
-                                "_id": "628f9251392f24b2f7299cba",
-                                "name": "小明",
-                                "photo": ""
+                    "data": {
+                        "userInfo": {
+                            "_id": "628f9267392f24b2f7299cbd",
+                            "name": "小華",
+                            "photo": "https://images.chinatimes.com/newsphoto/2020-06-04/656/20200604002777.jpg",
+                            "sex": "female",
+                            "following": [],
+                            "followers": []
+                        },
+                        "posts": [
+                            {
+                                "_id": "6299c52fbb7de924368e9727",
+                                "user": {
+                                    "_id": "628f9267392f24b2f7299cbd",
+                                    "name": "小華",
+                                    "photo": "https://images.chinatimes.com/newsphoto/2020-06-04/656/20200604002777.jpg",
+                                    "followers": []
+                                },
+                                "image": "https://s.yimg.com/uu/api/res/1.2/S6ODJbOoJdSQPH8KDkbOaQ--~B/aD0zOTk7dz01NzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/en/dailyview.tw/48371bf91d68b227435a5a5eb4eaed6e",
+                                "content": "我是小華哈哈哈哈哈哈",
+                                "createdAt": "2022-06-03T08:24:15.838Z",
+                                "likes": [],
+                                "comments": []
                             },
-                            "image": "",
-                            "content": "來自小明第四篇",
-                            "likes": [],
-                            "createdAt": "2022-05-29T08:17:54.236Z",
-                            "comments": [],
-                            "id": "62932c323e235d25404bccb1"
-                        }
-                      ]
+                            
+                        ]
+                    }
                 }
               }
       */
