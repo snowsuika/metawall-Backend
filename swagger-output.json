@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "week7 Imgur 圖片上傳",
+    "title": "MetaWall APIs",
     "description": "Description"
   },
   "host": "https://metawall-snow.herokuapp.com/",
@@ -925,6 +925,20 @@
             "required": true,
             "type": "string",
             "description": "使用者 id"
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "貼文關鍵字查詢",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "貼文排序 (新 -> 舊:desc ; 舊 -> 新 :asc ; 預設 desc)",
+            "type": "string",
+            "required": false
           }
         ],
         "responses": {
@@ -938,54 +952,88 @@
                   "example": "success"
                 },
                 "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "_id": {
-                        "type": "string",
-                        "example": "62932c323e235d25404bccb1"
-                      },
-                      "user": {
+                  "type": "object",
+                  "properties": {
+                    "userInfo": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "628f9267392f24b2f7299cbd"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "小華"
+                        },
+                        "photo": {
+                          "type": "string",
+                          "example": "https://images.chinatimes.com/newsphoto/2020-06-04/656/20200604002777.jpg"
+                        },
+                        "sex": {
+                          "type": "string",
+                          "example": "female"
+                        },
+                        "following": {
+                          "type": "array",
+                          "items": {}
+                        },
+                        "followers": {
+                          "type": "array",
+                          "items": {}
+                        }
+                      }
+                    },
+                    "posts": {
+                      "type": "array",
+                      "items": {
                         "type": "object",
                         "properties": {
                           "_id": {
                             "type": "string",
-                            "example": "628f9251392f24b2f7299cba"
+                            "example": "6299c52fbb7de924368e9727"
                           },
-                          "name": {
-                            "type": "string",
-                            "example": "小明"
+                          "user": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "628f9267392f24b2f7299cbd"
+                              },
+                              "name": {
+                                "type": "string",
+                                "example": "小華"
+                              },
+                              "photo": {
+                                "type": "string",
+                                "example": "https://images.chinatimes.com/newsphoto/2020-06-04/656/20200604002777.jpg"
+                              },
+                              "followers": {
+                                "type": "array",
+                                "items": {}
+                              }
+                            }
                           },
-                          "photo": {
+                          "image": {
                             "type": "string",
-                            "example": ""
+                            "example": "https://s.yimg.com/uu/api/res/1.2/S6ODJbOoJdSQPH8KDkbOaQ--~B/aD0zOTk7dz01NzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/en/dailyview.tw/48371bf91d68b227435a5a5eb4eaed6e"
+                          },
+                          "content": {
+                            "type": "string",
+                            "example": "我是小華哈哈哈哈哈哈"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2022-06-03T08:24:15.838Z"
+                          },
+                          "likes": {
+                            "type": "array",
+                            "items": {}
+                          },
+                          "comments": {
+                            "type": "array",
+                            "items": {}
                           }
                         }
-                      },
-                      "image": {
-                        "type": "string",
-                        "example": ""
-                      },
-                      "content": {
-                        "type": "string",
-                        "example": "來自小明第四篇"
-                      },
-                      "likes": {
-                        "type": "array",
-                        "items": {}
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2022-05-29T08:17:54.236Z"
-                      },
-                      "comments": {
-                        "type": "array",
-                        "items": {}
-                      },
-                      "id": {
-                        "type": "string",
-                        "example": "62932c323e235d25404bccb1"
                       }
                     }
                   }

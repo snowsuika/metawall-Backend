@@ -4,7 +4,7 @@ let host = process.env.NODE_ENV === 'dev' ? 'http://localhost:3000' : 'https://m
 
 const doc = {
     info: {
-        title: 'week7 Imgur 圖片上傳',
+        title: 'MetaWall APIs',
         description: 'Description',
     },
     host,
