@@ -7,7 +7,7 @@ const User = require('../models/usersModel');
 // Service
 const handleErrorAsyncWrapper = require('../service/handleErrorAsync');
 const handleSuccess = require('../service/handlesSuccess');
-const generateJWT = require('../service/generateJWT');
+const { generateJWT } = require('../service/auth');
 const appError = require('../service/appError');
 
 const auth = {
@@ -98,9 +98,12 @@ const auth = {
         //== 有經過 isAuth middleware，取得的 user 是驗證過的 ==
 
         //  1) 驗證欄位 a. 是否都相同 b. 是否與之前密碼相同
+        const passwordReg = '^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,20}$';
+
         if (password !== confirmPassword) return next(new appError('密碼不一致', 400));
         if (await bcrypt.compare(password, user.password)) return next(new appError('密碼不得與之前相同', 400));
         if (!validator.isLength(password, { min: 8 })) return next(new appError('密碼低於 8 碼！', 400));
+        if (!validator.matches(password, passwordReg)) return next(new appError('密碼必須為英文、數字混合 8~20 個字元！', 400));
 
         //  2) 寫入資料庫
         const updataDB = await User.findByIdAndUpdate(req.user?.id, {

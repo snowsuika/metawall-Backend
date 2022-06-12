@@ -1,9 +1,15 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const passport = require('passport');
+
+// controllers
 const AuthControllers = require('../controllers/auth.js');
 
 // middlewares
 const isAuth = require('../middlewares/isAuth');
+
+// service
+const { generateUrlJWT } = require('../service/auth');
 
 /**
  *  註冊
@@ -103,6 +109,29 @@ router.post(
     '/updatePassword',
     isAuth,
     AuthControllers.updatePassword
+);
+
+/********************************************************************************************
+ *  Google 第三方登入
+ */
+
+// 指定 google 驗證策略驗證請求
+router.get(
+    /**
+     * #swagger.ignore = true
+     */
+    '/google',
+    passport.authenticate('google', { scope: ['email', 'profile'] })
+);
+
+// 設定已授權的重新導向 URI
+router.get(
+    /**
+     * #swagger.ignore = true
+     */
+    '/google/callback',
+    passport.authenticate('google', { session: false }),
+    (req, res, next) => generateUrlJWT(req.user, res)
 );
 
 module.exports = router;

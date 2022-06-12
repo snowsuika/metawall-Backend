@@ -22,7 +22,9 @@ process.on('uncaughtException', (err, origin) => {
     process.exit(1); //用於結束 process 的方法
 });
 
-require('./connections');
+require('./connections'); // 連接 DB
+require('./service/passport');
+
 var app = express();
 
 app.use(cors());
@@ -55,7 +57,7 @@ app.use((req, res, next) => {
 // 統一管理錯誤
 app.use(errorHandler);
 
-// 有使用到 promise。處理沒有捕獲到的 catch
+// 有使用到 promise，處理沒有捕獲到的 catch
 process.on('unhandledRejection', (reason, promise) => {
     console.log('Unhandled Rejection at:', promise, 'reason:', reason);
 });
