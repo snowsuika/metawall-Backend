@@ -16,7 +16,7 @@ const generateUrlJWT = (user, res) => {
     });
     
     // 重新導向到前端
-    res.redirect(`https://snowsuika.github.io/metawall/#/callback?token=${token}&name=${user.name}`);
+    res.redirect(`${process.env.FRRONT_DOMAIN}/callback?token=${token}&name=${user.name}`);
 };
 
 module.exports = { generateJWT, generateUrlJWT };
