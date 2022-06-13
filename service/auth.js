@@ -15,9 +15,8 @@ const generateUrlJWT = (user, res) => {
         expiresIn: process.env.JWT_EXPIRES_DAY,
     });
     
-    // http://localhost:8080/callback
     // 重新導向到前端
-    res.redirect(`https://snowsuika.github.io/metawall/callback?token=${token}&name=${user.name}`);
+    res.redirect(`https://snowsuika.github.io/metawall/#/callback?token=${token}&name=${user.name}`);
 };
 
 module.exports = { generateJWT, generateUrlJWT };
